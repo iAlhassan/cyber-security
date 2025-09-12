@@ -1,0 +1,7690 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة التحضير للاختبار الشامل - الأمن السيبراني</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg,#667eea 0%,#764ba2 100%); min-height:100vh; direction:rtl; user-select:none; }
+        .header { background:rgba(255,255,255,0.1); backdrop-filter:blur(10px); padding:1.5rem 0; color:white; margin-bottom:2rem; }
+        .header-content { display:flex; align-items:center; justify-content:center; gap:2rem; flex-wrap:wrap; max-width:1200px; margin:auto; padding:0 1rem; }
+        .logo img { width:160px; height:auto; filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
+        .header-text { text-align:center; }
+        .header-text h1 { font-size:3rem; margin-bottom:0.8rem;
+            background:linear-gradient(45deg,#fff,#e1f5fe);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .header-text p { font-size:1.3rem; opacity:0.9; }
+        .institution-name { color:#FFD700; font-weight:bold; }
+        .container { max-width:1200px; margin:auto; padding:0 1rem; }
+        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-bottom:2rem; }
+        .stat-card { background:rgba(255,255,255,0.1); backdrop-filter:blur(10px); border-radius:15px; padding:1.5rem; text-align:center; color:white; }
+        .stat-number { font-size:2.5rem; font-weight:bold; 
+            background:linear-gradient(45deg,#4facfe,#00f2fe);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .controls { background:rgba(255,255,255,0.1); backdrop-filter:blur(10px); border-radius:15px; padding:1.5rem; margin-bottom:2rem; color:white; }
+        .filter-group { display:flex; flex-wrap:wrap; gap:1rem; align-items:center; margin-bottom:1rem; }
+        .filter-group label { color:#FFD700; font-weight:bold; margin-left:0.5rem; }
+        select,input { padding:0.7rem; border:none; border-radius:8px; background:rgba(255,255,255,0.2); color:white; }
+        button { background:linear-gradient(45deg,#ff6b6b,#ee5a6f); color:white; border:none; padding:0.8rem 1.8rem; border-radius:8px; cursor:pointer; }
+        .question-card { background:rgba(255,255,255,0.1); backdrop-filter:blur(10px); border-radius:15px; padding:1.8rem; margin-bottom:1.5rem; color:white; opacity:0; animation:fadeIn 0.5s forwards; }
+        @keyframes fadeIn { to { opacity:1; } }
+        .question-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; flex-wrap:wrap; }
+        .question-number { background:linear-gradient(45deg,#4facfe,#00f2fe); color:white; padding:0.4rem 1rem; border-radius:25px; font-weight:bold; }
+        .question-meta { display:flex; gap:0.8rem; flex-wrap:wrap; }
+        .badge { padding:0.3rem 1rem; border-radius:20px; font-weight:bold; }
+        .badge-easy { background:linear-gradient(45deg,#4caf50,#45a049); }
+        .badge-medium { background:linear-gradient(45deg,#ff9800,#f57c00); }
+        .badge-hard { background:linear-gradient(45deg,#f44336,#d32f2f); }
+        .badge-multiple { background:linear-gradient(45deg,#2196f3,#1976d2); }
+        .badge-truefalse { background:linear-gradient(45deg,#9c27b0,#7b1fa2); }
+        .question-text { font-size:1.2rem; line-height:1.8; margin-bottom:1.5rem; padding:1.2rem; background:rgba(0,0,0,0.1); border-radius:10px; border-right:4px solid #4facfe; }
+        .options { margin-bottom:1.2rem; }
+        .option { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:1rem; margin-bottom:0.8rem; cursor:pointer; }
+        .option:hover { background:rgba(255,255,255,0.1); border-color:#4facfe; }
+        .option.selected { background:rgba(33,150,243,0.3); border-color:#2196f3; }
+        .option.correct { background:rgba(76,175,80,0.3); border-color:#4caf50; }
+        .option.incorrect { background:rgba(244,67,54,0.3); border-color:#f44336; }
+        .show-answer-btn { background:linear-gradient(45deg,#43cea2,#185a9d); }
+        .course-title { background:rgba(255,255,255,0.15); backdrop-filter:blur(10px); padding:1.5rem; margin:2rem 0 1rem; text-align:center; color:#FFD700; font-weight:bold; border-radius:15px; }
+        .no-questions { text-align:center; color:white; font-size:1.3rem; margin:3rem 0; padding:2rem; background:rgba(255,255,255,0.1); border-radius:15px; }
+        .pagination { display:flex; justify-content:center; gap:0.8rem; margin:2rem 0; flex-wrap:wrap; }
+        .pagination button { background:rgba(255,255,255,0.2); color:white; border:none; padding:0.8rem 1.2rem; border-radius:8px; cursor:pointer; }
+        .pagination button.active { background:linear-gradient(45deg,#4facfe,#00f2fe); }
+        @media(max-width:768px){.header-content{flex-direction:column;} .stats-grid{grid-template-columns:repeat(2,1fr);} .filter-group{flex-direction:column;} .search-box{width:100%;}}
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <!-- High-quality scaled-down PNG logo -->
+                <img src="logo.png" alt="معهد جازان العالي للتدريب Logo">
+            </div>
+            <div class="header-text">
+                <h1>منصة التحضير للاختبار الشامل</h1>
+                <p>تخصص الأمن السيبراني - <span class="institution-name">معهد جازان العالي للتدريب</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-number">325</div><div>إجمالي الأسئلة</div></div>
+            <div class="stat-card"><div class="stat-number">134</div><div>أسئلة سهلة</div></div>
+            <div class="stat-card"><div class="stat-number">129</div><div>أسئلة متوسطة</div></div>
+            <div class="stat-card"><div class="stat-number">62</div><div>أسئلة صعبة</div></div>
+            <div class="stat-card"><div class="stat-number">265</div><div>اختيار متعدد</div></div>
+            <div class="stat-card"><div class="stat-number">60</div><div>صح وخطأ</div></div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="filter-group">
+                <input id="searchBox" class="search-box" placeholder="ابحث في الأسئلة...">
+            </div>
+            <div class="filter-group">
+                <label>المقرر:</label><select id="courseFilter"><option value="">جميع المقررات</option></select>
+                <label>مستوى الصعوبة:</label><select id="difficultyFilter"><option value="">جميع المستويات</option><option value="سهل">سهل</option><option value="متوسط">متوسط</option><option value="صعب">صعب</option></select>
+                <label>نوع السؤال:</label><select id="typeFilter"><option value="">جميع الأنواع</option><option value="اختيار متعدد">اختيار متعدد</option><option value="صح وخطأ">صح وخطأ</option></select>
+                <button onclick="applyFilters()">تطبيق الفلاتر</button>
+                <button onclick="resetFilters()">إعادة تعيين</button>
+                <button onclick="shuffleQuestions()">خلط الأسئلة</button>
+            </div>
+        </div>
+
+        <!-- Questions Container -->
+        <div id="questionsContainer" class="no-questions">
+            <h2>مرحباً بك في منصة التحضير للاختبار الشامل</h2>
+            <p>تم إعداد هذه المنصة خصيصاً لطلاب تخصص الأمن السيبراني</p>
+            <p><strong>معهد جازان العالي للتدريب</strong></p>
+            <p>يرجى إضافة بيانات الأسئلة لبدء الاستخدام</p>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <script>
+        // Replace this array with your full questions JSON
+        const questionsData = [
+  {
+    "id": "1",
+    "text": "في  هجوم .........يلتقط المهاجم البيانات ثم يقوم بإرسالها لاحقا دون تغيير.",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "إعادة الإرسال",
+    "options": [
+      {
+        "text": "إعادة الإرسال",
+        "is_correct": true
+      },
+      {
+        "text": "إنتحال الشخصية",
+        "is_correct": false
+      },
+      {
+        "text": "تعديل المحتوى",
+        "is_correct": false
+      },
+      {
+        "text": "منع الخدمة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "text": "أي مما يلي ليس من أنواع الهجوم النشط؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "تحليل البيانات",
+    "options": [
+      {
+        "text": "تحليل البيانات",
+        "is_correct": true
+      },
+      {
+        "text": "تعديل البيانات",
+        "is_correct": false
+      },
+      {
+        "text": "إعادة الإرسال",
+        "is_correct": false
+      },
+      {
+        "text": "منع الخدمة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "text": "أي مما يلي يمثل  حماية البيانات المرسلة من الهجمات السلبية؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "الخصوصية أوالسرية",
+    "options": [
+      {
+        "text": "تكامل البيانات",
+        "is_correct": false
+      },
+      {
+        "text": "الخصوصية أوالسرية",
+        "is_correct": true
+      },
+      {
+        "text": "عدم التنصل",
+        "is_correct": false
+      },
+      {
+        "text": "مصادقة البيانات",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "text": "عند تشفير حرف C  باستخدام شفرة قيصر فإنه يستبدل بحرف ......",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "F",
+    "options": [
+      {
+        "text": "D",
+        "is_correct": false
+      },
+      {
+        "text": "E",
+        "is_correct": false
+      },
+      {
+        "text": "F",
+        "is_correct": true
+      },
+      {
+        "text": "G",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "text": "أي من خوارزميات التشفير التالية لا ينتمي للتشفر  بالتبديل",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "ريل فينس",
+    "options": [
+      {
+        "text": "قيصر",
+        "is_correct": false
+      },
+      {
+        "text": "هيل",
+        "is_correct": false
+      },
+      {
+        "text": "ريل فينس",
+        "is_correct": true
+      },
+      {
+        "text": "بلاي فير",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "text": "أي خوازميات التي تتعامل مع حرفي I,J  على أنهما حرف واحد",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "بلاي فير",
+    "options": [
+      {
+        "text": "قيصر",
+        "is_correct": false
+      },
+      {
+        "text": "هيل",
+        "is_correct": false
+      },
+      {
+        "text": "ريل فينس",
+        "is_correct": false
+      },
+      {
+        "text": "بلاي فير",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "7",
+    "text": "ناتج تشفير جملة \"Meet Me\"  باستخدام شفرة ريل فينس هو .........",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "MEMETE",
+    "options": [
+      {
+        "text": "MEMEET",
+        "is_correct": false
+      },
+      {
+        "text": "MEMETE",
+        "is_correct": true
+      },
+      {
+        "text": "MEEMTE",
+        "is_correct": false
+      },
+      {
+        "text": "MEEMET",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "8",
+    "text": "التشفير  ....  هو تشفير  للبيانات  بت واحد أو بايت واحد في المرة الواحدة.",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "التدفقي",
+    "options": [
+      {
+        "text": "التدفقي",
+        "is_correct": true
+      },
+      {
+        "text": "الكتلي",
+        "is_correct": false
+      },
+      {
+        "text": "المتماثل",
+        "is_correct": false
+      },
+      {
+        "text": "غير المتماثل",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "9",
+    "text": "التشفير .....يتم فيه التعامل مع النص ككل ويستخدم لإنتاج  نص مشفر متساوي الطول",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "الكتلي",
+    "options": [
+      {
+        "text": "التدفقي",
+        "is_correct": false
+      },
+      {
+        "text": "الكتلي",
+        "is_correct": true
+      },
+      {
+        "text": "المتماثل",
+        "is_correct": false
+      },
+      {
+        "text": "غير المتماثل",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "10",
+    "text": "خوارزمية النشفير DES  تنتمي لنوعية التشفير ......",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "الكتلي",
+    "options": [
+      {
+        "text": "التدفقي",
+        "is_correct": false
+      },
+      {
+        "text": "الكتلي",
+        "is_correct": true
+      },
+      {
+        "text": "المتماثل",
+        "is_correct": false
+      },
+      {
+        "text": "غير المتماثل",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "11",
+    "text": "ما هو طول المفتاح المستخدم في طريقة DES  الثلاثية للتشفير؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "168",
+    "options": [
+      {
+        "text": "56",
+        "is_correct": false
+      },
+      {
+        "text": "168",
+        "is_correct": true
+      },
+      {
+        "text": "192",
+        "is_correct": false
+      },
+      {
+        "text": "256",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "12",
+    "text": "خوارزمية التشفير AES ....  تنتمي لنوعية التشفير.....",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "المتماثل",
+    "options": [
+      {
+        "text": "في إتجاه واحد",
+        "is_correct": false
+      },
+      {
+        "text": "التدفقي",
+        "is_correct": false
+      },
+      {
+        "text": "المتماثل",
+        "is_correct": true
+      },
+      {
+        "text": "غير المتماثل",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "13",
+    "text": "يتم تحويل كتلة AES لمصفوفة....... مربعة من البايت",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "4 * 4",
+    "options": [
+      {
+        "text": "2 * 2",
+        "is_correct": false
+      },
+      {
+        "text": "4 * 4",
+        "is_correct": true
+      },
+      {
+        "text": "8 * 8",
+        "is_correct": false
+      },
+      {
+        "text": "16 * 16",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "14",
+    "text": "طول مفتاح  الدخل في خوارزمية  AES يساوي ..... بايت",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "16",
+    "options": [
+      {
+        "text": "4",
+        "is_correct": false
+      },
+      {
+        "text": "16",
+        "is_correct": true
+      },
+      {
+        "text": "24",
+        "is_correct": false
+      },
+      {
+        "text": "32",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "15",
+    "text": "طول مفتاح  الخرج  في خوارزمية  AES يساوي ..... بايت",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "32",
+    "options": [
+      {
+        "text": "4",
+        "is_correct": false
+      },
+      {
+        "text": "16",
+        "is_correct": false
+      },
+      {
+        "text": "24",
+        "is_correct": false
+      },
+      {
+        "text": "32",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "16",
+    "text": "في خوارزمية AES يستخدم S-box لإجراء استبدال بايت للكتلة  في مرحلة ......",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "استبدل البايت",
+    "options": [
+      {
+        "text": "استبدل البايت",
+        "is_correct": true
+      },
+      {
+        "text": "إزاحة الصفوف",
+        "is_correct": false
+      },
+      {
+        "text": "مزج الأعمدة",
+        "is_correct": false
+      },
+      {
+        "text": "إضافة مدور المفتاح",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "17",
+    "text": "في خوارزمية RSA يستخدم  المفتاح ..... للتشفير بينما يستخدم المفتاح ..... لفك التشفير.",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "العام-الخاص",
+    "options": [
+      {
+        "text": "العام-العام",
+        "is_correct": false
+      },
+      {
+        "text": "الخاص-العام",
+        "is_correct": false
+      },
+      {
+        "text": "العام-الخاص",
+        "is_correct": true
+      },
+      {
+        "text": "الخاص-الخاص",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "18",
+    "text": "عدد المفاتيح المشتخدمة في خوارزميات التشفير غير المتناثل ....... مفتاح",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "2",
+    "options": [
+      {
+        "text": "1",
+        "is_correct": false
+      },
+      {
+        "text": "2",
+        "is_correct": true
+      },
+      {
+        "text": "3",
+        "is_correct": false
+      },
+      {
+        "text": "4",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "19",
+    "text": "في التوقيع الرقمي يستخدم  المفتاح ..... للتشفير بينما يستخدم المفتاح ..... لفك التشفير.",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "الخاص-العام",
+    "options": [
+      {
+        "text": "العام-العام",
+        "is_correct": false
+      },
+      {
+        "text": "الخاص-العام",
+        "is_correct": true
+      },
+      {
+        "text": "العام-الخاص",
+        "is_correct": false
+      },
+      {
+        "text": "الخاص-الخاص",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "20",
+    "text": "خوارزمية Diffie–Hellman تستخدم في .........",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "تبادل المفاتيح",
+    "options": [
+      {
+        "text": "التشفيرالمتماثل",
+        "is_correct": false
+      },
+      {
+        "text": "التشفير/فك التشفير",
+        "is_correct": false
+      },
+      {
+        "text": "التوقيع االرقمي",
+        "is_correct": false
+      },
+      {
+        "text": "تبادل المفاتيح",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "21",
+    "text": "خوارزمية DSS   تستخدم في .........",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "التوقيع الإكتروني",
+    "options": [
+      {
+        "text": "التشفيرالمتماثل",
+        "is_correct": false
+      },
+      {
+        "text": "التشفير/فك التشفير",
+        "is_correct": false
+      },
+      {
+        "text": "التوقيع  الرقمي",
+        "is_correct": false
+      },
+      {
+        "text": "تبادل المفاتيح",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "22",
+    "text": "في خوارزمية RSA  إذا علمت أن قيمة الأعداد الأولية المختارة هي 17و 11  فإن قيمة حساب الدالة    Ф(n) يساوي .........",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "160",
+    "options": [
+      {
+        "text": "28",
+        "is_correct": false
+      },
+      {
+        "text": "187",
+        "is_correct": false
+      },
+      {
+        "text": "160",
+        "is_correct": true
+      },
+      {
+        "text": "192",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "23",
+    "text": "طريقة إختراق خوارزم RSA  التي تعتمد على تجربة جميع المفاتيح الخاصة الممكنة هي .......",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "القوة الغاشمة",
+    "options": [
+      {
+        "text": "القوة الغاشمة",
+        "is_correct": true
+      },
+      {
+        "text": "الهجمات الرياضية",
+        "is_correct": false
+      },
+      {
+        "text": "الهجمات التوقيتية",
+        "is_correct": false
+      },
+      {
+        "text": "هجمات النص المشفر المختارة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "24",
+    "text": "طريقة إختراق خوارزم RSA  التي تعتمد إستغلال خصائص خوارزم RSA  نفسه  هي  .......",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "هجمات النص المشفر المختارة",
+    "options": [
+      {
+        "text": "القوة الغاشمة",
+        "is_correct": false
+      },
+      {
+        "text": "الهجمات الرياضية",
+        "is_correct": false
+      },
+      {
+        "text": "الهجمات التوقيتية",
+        "is_correct": false
+      },
+      {
+        "text": "هجمات النص المشفر المختارة",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "25",
+    "text": "يتم تشفير الاتصال بين الأنظمة الطرفية باستخدام مفتاح مؤقت ، يُشار إليه غالبًا باسم ........",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "مفتاح الجلسة",
+    "options": [
+      {
+        "text": "المفتاح العام",
+        "is_correct": false
+      },
+      {
+        "text": "المفتاح الخاص",
+        "is_correct": false
+      },
+      {
+        "text": "مفتاح الجلسة",
+        "is_correct": true
+      },
+      {
+        "text": "المفتاح الرئيسي",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "26",
+    "text": "نوع مفتاح الجلسة المستخدم في الاتصال العام عبر الشبكة هو .......",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "مفتاح تشفير البيانات",
+    "options": [
+      {
+        "text": "مفتاح تشفير البيانات",
+        "is_correct": true
+      },
+      {
+        "text": "مفتاح تشفير تعريف الأرقام الشخصية",
+        "is_correct": false
+      },
+      {
+        "text": "مفتاح تشفير الملفات",
+        "is_correct": false
+      },
+      {
+        "text": "مفتاح تشفير الجلسات",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "27",
+    "text": "يتم عمل XOR بين قيمة التجزئة (hash) و المفتاح .... لإنتاج مخرجات تُستخدم كمدخل  لتشفير مفتاح ......",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "الأساسي-الجلسة",
+    "options": [
+      {
+        "text": "العام-الخاص",
+        "is_correct": false
+      },
+      {
+        "text": "الخاص-العام",
+        "is_correct": false
+      },
+      {
+        "text": "الأساسي-الجلسة",
+        "is_correct": true
+      },
+      {
+        "text": "الجلسة- الأساسي",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "28",
+    "text": "خوارزمية AES  تعرف مصفوفة 16 * 16 لقيم البايت ، تسمى S-box ، والتي تحتوي على تبديل لجميع ا256 الممكنة ل 8 بت.",
+    "type": "صح وخطأ",
+    "difficulty": "صعب",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "29",
+    "text": "يمكن استخدام طول مفتاح أصغر بكثير لـ ECC مقارنة بـ RSA.",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "30",
+    "text": "عند استخدام ECC لتوفير مصادقة الرسائل ، غالبًا ما يشار إلى قيمة دالة التجزئة على أنها خلاصة رسالة (Message Digest)",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "31",
+    "text": "بروتوكول....يستخدم لنقل الرسائل عبر الإنترنت من المصدر إلى الوجهة .",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "SMTP",
+    "options": [
+      {
+        "text": "SMTP",
+        "is_correct": true
+      },
+      {
+        "text": "DNS",
+        "is_correct": false
+      },
+      {
+        "text": "MIME",
+        "is_correct": false
+      },
+      {
+        "text": "POP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "32",
+    "text": "بروتوكول ......يستخدم لنقل الرسائل بين خوادم البريد",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "POP",
+    "options": [
+      {
+        "text": "SMTP",
+        "is_correct": false
+      },
+      {
+        "text": "DNS",
+        "is_correct": false
+      },
+      {
+        "text": "MIME",
+        "is_correct": false
+      },
+      {
+        "text": "POP",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "33",
+    "text": "..... يوفر المصادقة والسلامة وعدم التنصل (عبر رقمي\nالتوقيعات) والسرية (عبر التشفير) لنص الرسالة المنقولة في رسائل SMTP.",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "S/MIME",
+    "options": [
+      {
+        "text": "STARTTLS",
+        "is_correct": false
+      },
+      {
+        "text": "S/MIME",
+        "is_correct": true
+      },
+      {
+        "text": "DNSSEC",
+        "is_correct": false
+      },
+      {
+        "text": "DANE",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "34",
+    "text": "بروتوكول S/MIME  يوفر الخدمات التالية فيما عدا ......",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "عدم التنصل",
+    "options": [
+      {
+        "text": "المصادقة",
+        "is_correct": false
+      },
+      {
+        "text": "الضغط",
+        "is_correct": false
+      },
+      {
+        "text": "عدم التنصل",
+        "is_correct": true
+      },
+      {
+        "text": "السرية",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "35",
+    "text": "البروتوكول الأكثر إستخداما مع بروتوكول S/MIME هو .......",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "AES",
+    "options": [
+      {
+        "text": "DES",
+        "is_correct": false
+      },
+      {
+        "text": "AES",
+        "is_correct": true
+      },
+      {
+        "text": "RC4",
+        "is_correct": false
+      },
+      {
+        "text": "RSA",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "36",
+    "text": "يتطلب......أن يكون كل نظام نهائي قادرًا على الاتصال بطريقة آمنة مع جميع الأنظمة الطرفية الشريكة المحتملة لأغراض توزيع مفتاح الجلسة",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "النهج اللامركزي للتحكم في المفتاح",
+    "options": [
+      {
+        "text": "النهج اللامركزي للتحكم في المفتاح",
+        "is_correct": true
+      },
+      {
+        "text": "النهج المركزي للتحكم في المفتاح",
+        "is_correct": false
+      },
+      {
+        "text": "النظام الشفاف للتحكم في المفتاح",
+        "is_correct": false
+      },
+      {
+        "text": "النهج الهرمي للتحكم في المفتاح",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "37",
+    "text": "أي مما يلي ليس من مكونات  الشهادة (Certificate) من مفتاح عام ومعرف مالك المفتاح والكتلة بأكملها موقعة من قبل طرف ثالث موثوق به.",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "مفتاح تشفير الجلسات",
+    "options": [
+      {
+        "text": "المفتاح العام",
+        "is_correct": false
+      },
+      {
+        "text": "معرف مالك المفتاح",
+        "is_correct": false
+      },
+      {
+        "text": "توقيع طرف ثالث موثوق به",
+        "is_correct": false
+      },
+      {
+        "text": "مفتاح تشفير الجلسات",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "38",
+    "text": "السرية هي حماية البيانات المرسلة من الهجمات النشطة.",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "39",
+    "text": "تم تعريف ثلاث خدمات من خدمات المصادقة في X.800.",
+    "type": "صح وخطأ",
+    "difficulty": "صعب",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "40",
+    "text": "عدم االتنصل يعني أنه عند إرسال رسالة ، يمكن للمستلم إثبات أن المرسل المزعوم أرسل الرسالة بالفعل",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "41",
+    "text": "تعتمد خوارزمية Playfair على استخدام مصفوفة 4 * 4 من الحروف التي تم إنشاؤها باستخدام كلمة مفتاحية",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "42",
+    "text": "تستخدم أساليب التشفير  المختلفة لإخفاء  وجود الرسالة",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "43",
+    "text": "كلما زاد عدد الجولات ، زادت صعوبة إجراء فك الشفرة ، حتى لو كانت الدالةـ F ضعيفة نسبيًا",
+    "type": "صح وخطأ",
+    "difficulty": "صعب",
+    "course": "التشفير التطبيقي",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "44",
+    "text": ".... هو بروتوكول مراسلة إنترنت الأشياء ، قائم على UDP ، ومخصص للاستخدام في أجهزة الإنترنت محدودة الموارد",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "CoAP",
+    "options": [
+      {
+        "text": "MQTT",
+        "is_correct": false
+      },
+      {
+        "text": "CoAP",
+        "is_correct": true
+      },
+      {
+        "text": "XMPP",
+        "is_correct": false
+      },
+      {
+        "text": "DDS",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "45",
+    "text": "تم تصميم بروتوكول ..... لتوفير نظام انتظار لدعم الاتصالات من خادم إلى خادم",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "AMPQP",
+    "options": [
+      {
+        "text": "AMPQP",
+        "is_correct": true
+      },
+      {
+        "text": "MQTT",
+        "is_correct": false
+      },
+      {
+        "text": "CoAP",
+        "is_correct": false
+      },
+      {
+        "text": "XMPP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "46",
+    "text": "بروتوكول ....هو أحد بروتوكولات الرسائل مصمم بشكل أساسي للاتصال من جهاز إلى جهاز ويستخدم في سيناريوهات النشر التي تتضمن مزارع الرياح وأنظمة التصوير الطبي وأنظمة تتبع الأصول.",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "DDS",
+    "options": [
+      {
+        "text": "MQTT",
+        "is_correct": false
+      },
+      {
+        "text": "CoAP",
+        "is_correct": false
+      },
+      {
+        "text": "XMPP",
+        "is_correct": false
+      },
+      {
+        "text": "DDS",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "47",
+    "text": "Zwave يعتبر أحد بروتوكولات طبقة .......",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "الفيزيائية",
+    "options": [
+      {
+        "text": "النقل",
+        "is_correct": false
+      },
+      {
+        "text": "التطبيقات",
+        "is_correct": false
+      },
+      {
+        "text": "الشبكة",
+        "is_correct": false
+      },
+      {
+        "text": "الفيزيائية",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "48",
+    "text": "الحرمان من الخدمة والتشويش يعتبر ......",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "هجوم",
+    "options": [
+      {
+        "text": "خطر",
+        "is_correct": false
+      },
+      {
+        "text": "نقطة ضعف",
+        "is_correct": false
+      },
+      {
+        "text": "هجوم",
+        "is_correct": true
+      },
+      {
+        "text": "تهديد",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "49",
+    "text": "....... لا يفحص فقط الإيقاف التام لتشغيل الجهاز أو النظام ، ولكن أيضًا مختلف الأعطال أو السلوكيات السيئة الناتجة عن نقاط ضعف الجهاز والتنازلات المحتملة",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "تقييم تأثير السلامة",
+    "options": [
+      {
+        "text": "نمذجة التهديدات",
+        "is_correct": false
+      },
+      {
+        "text": "تقييم تأثير الخصوصية",
+        "is_correct": false
+      },
+      {
+        "text": "تقييم تأثير السلامة",
+        "is_correct": true
+      },
+      {
+        "text": "الامتثال",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "50",
+    "text": ".......تتعلق بالعمليات المرتبطة بالتوفير الأولي لكلمات المرور وبيانات الاعتماد ومعلومات الشبكة والمعلمات الأخرى للأجهزة وأنظمة المؤسسة",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "التمهيد الأمن",
+    "options": [
+      {
+        "text": "الحسابات والاعتمادات",
+        "is_correct": false
+      },
+      {
+        "text": "المراجعة والمراقبة",
+        "is_correct": false
+      },
+      {
+        "text": "التمهيد الأمن",
+        "is_correct": true
+      },
+      {
+        "text": "التعاقب والتحديث",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "51",
+    "text": "....... تضع في اعتبارها هوية جهاز إنترنت الأشياء وإدارة الهوية في المؤسسة الضخمة",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "الحسابات والاعتمادات",
+    "options": [
+      {
+        "text": "الحسابات والاعتمادات",
+        "is_correct": true
+      },
+      {
+        "text": "المراجعة والمراقبة",
+        "is_correct": false
+      },
+      {
+        "text": "التمهيد الأمن",
+        "is_correct": false
+      },
+      {
+        "text": "التعاقب والتحديث",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "52",
+    "text": ".... يتعلق بأنظمة أمن المؤسسة وقدرتها على التقاط وتحليل الحالات الشاذة",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "المراجعة والمراقبة",
+    "options": [
+      {
+        "text": "الحسابات والاعتمادات",
+        "is_correct": false
+      },
+      {
+        "text": "المراجعة والمراقبة",
+        "is_correct": true
+      },
+      {
+        "text": "التمهيد الأمن",
+        "is_correct": false
+      },
+      {
+        "text": "التعاقب والتحديث",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "53",
+    "text": "رمز مصادقة الرسالة  (MAC)هو سمة من سمات خدمة .....",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "المصادقة",
+    "options": [
+      {
+        "text": "الخصوصية",
+        "is_correct": false
+      },
+      {
+        "text": "المصادقة",
+        "is_correct": true
+      },
+      {
+        "text": "النزاهة",
+        "is_correct": false
+      },
+      {
+        "text": "عدم التنصل",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "54",
+    "text": "التوقيع الرقمي هو سمة  أساسية لتحقيق خدمة .....",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "عدم التنصل",
+    "options": [
+      {
+        "text": "الخصوصية",
+        "is_correct": false
+      },
+      {
+        "text": "المصادقة",
+        "is_correct": false
+      },
+      {
+        "text": "النزاهة",
+        "is_correct": false
+      },
+      {
+        "text": "عدم التنصل",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "55",
+    "text": "التشفيرهو سمة من سمات خدمة .....",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "الخصوصية",
+    "options": [
+      {
+        "text": "الخصوصية",
+        "is_correct": true
+      },
+      {
+        "text": "المصادقة",
+        "is_correct": false
+      },
+      {
+        "text": "النزاهة",
+        "is_correct": false
+      },
+      {
+        "text": "عدم التنصل",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "56",
+    "text": "يستخدم جهاز  A (إنترنت الاشياء) المفتاح ....... لجهاز B  (إنترنت الاشياء)   للتشفير على الجهاز B.",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "العام",
+    "options": [
+      {
+        "text": "العام",
+        "is_correct": true
+      },
+      {
+        "text": "الخاص",
+        "is_correct": false
+      },
+      {
+        "text": "الرئيسي",
+        "is_correct": false
+      },
+      {
+        "text": "المتماثل",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "57",
+    "text": "خوارزمية التشفير غير المتماثل الوحيدة المستخدمة اليوم هي خوارزمية .......",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "RSA",
+    "options": [
+      {
+        "text": "DES",
+        "is_correct": false
+      },
+      {
+        "text": "AES",
+        "is_correct": false
+      },
+      {
+        "text": "RSA",
+        "is_correct": true
+      },
+      {
+        "text": "SH5",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "58",
+    "text": "أي مما  الخدمات يلي لا يحققها التوقيع  الرقمي؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "الخصوصية",
+    "options": [
+      {
+        "text": "الخصوصية",
+        "is_correct": true
+      },
+      {
+        "text": "المصادقة",
+        "is_correct": false
+      },
+      {
+        "text": "النزاهة",
+        "is_correct": false
+      },
+      {
+        "text": "عدم التنصل",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "59",
+    "text": "في ZigBee يتم إستخدام المفاتيح .....  والتي تم تثبيتها مسبقًا من قبل البائع ولحماية عمليات تبادل المفاتيح بين عقدتي ZigBee",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "الرئيسية",
+    "options": [
+      {
+        "text": "الرئيسية",
+        "is_correct": true
+      },
+      {
+        "text": "الروابط",
+        "is_correct": false
+      },
+      {
+        "text": "الشبكة",
+        "is_correct": false
+      },
+      {
+        "text": "العامة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "60",
+    "text": "مفاتيح ...... ، والتي تتم مشاركتها عبر جميع عقد ZigBee في الشبكة ويتم توفيرها بواسطة مركز ثقة ZigBee ؛ تستخدم  لدعم اتصالات البث الآمن",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "الشبكة",
+    "options": [
+      {
+        "text": "الرئيسية",
+        "is_correct": false
+      },
+      {
+        "text": "الروابط",
+        "is_correct": false
+      },
+      {
+        "text": "الشبكة",
+        "is_correct": true
+      },
+      {
+        "text": "العامة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "61",
+    "text": "أي من مفاهيم الأمان التالية غير مدعومة في  Bluetooth-LE ؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "التوقيع الرقمي",
+    "options": [
+      {
+        "text": "الإقتران",
+        "is_correct": false
+      },
+      {
+        "text": "الترابط",
+        "is_correct": false
+      },
+      {
+        "text": "التشفير",
+        "is_correct": false
+      },
+      {
+        "text": "التوقيع الرقمي",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "62",
+    "text": "يوجد  تصميم TLS بديل يسمى Datagram TLS (DTLS) مخصص للمنتجات التي تنفذ النقل المستند إلى TCP.",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "63",
+    "text": "السلامة تعني لأنه يجب على الغالم ألا يضر بالنظام",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "64",
+    "text": "كل ورقة من أوراق شجرة الخطأ مستقلة تمامًا (تحدث العيوب بشكل عشوائي ومستقل عن بعضها البعض) عن جميع أوراق الشجرة الأخرى",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "65",
+    "text": "تم تصميم بروتوكول ZigBee بحيث يشمل جميع إجراءات  الأمان و عدم التعرض للخطر عند عمل إجراءات إقران الأجهزة .",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "66",
+    "text": "أحد العوامل الرئيسية التي تميز إنترنت الأشياء مع أمن تكنولوجيا المعلومات التقليدي هو الحاجة إلى إجراء تقييمات الأثر على السلامة",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "67",
+    "text": "الاقتران هو أحد  مفاهيم الأمان  المدعومة في  Bluetooth-LE  وفيه  تنشئ الأجهزة مفتاحًا سريًا واحدًا أو أكثر مشتركًا:",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "68",
+    "text": "من بين أكبر الثغرات الأمنية لإدارة الهوية والوصول هو التمهيد (bootstrapping) غير الآمن.",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "أمن إنترنت الأشياء",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "69",
+    "text": "في .......، يجب تحديد الأدلة بشكل صحيح ، وتصنيفها على أنها مناولة من قبل موظفين مصرح لهم ، ومدربين على إجراءات التحقيق",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "مسرح الجريمة",
+    "options": [
+      {
+        "text": "مركز الشرطة",
+        "is_correct": false
+      },
+      {
+        "text": "النيابة",
+        "is_correct": false
+      },
+      {
+        "text": "المحكمة",
+        "is_correct": false
+      },
+      {
+        "text": "مسرح الجريمة",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "70",
+    "text": "يُشار إلى إنشاء نسخة من كل جزء من البيانات تمامًا كما هي ، باسم ...",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "الصورة المادية",
+    "options": [
+      {
+        "text": "الصورة المادية",
+        "is_correct": true
+      },
+      {
+        "text": "الدليل المادي",
+        "is_correct": false
+      },
+      {
+        "text": "الإستخلاص المادي",
+        "is_correct": false
+      },
+      {
+        "text": "نسخة بت التدفق (bitsteam copy)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "71",
+    "text": "نستخدم  ......  لضمان سلامة نسخة البيانات المصنفة كدليل.",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "نسخة بت التدفق (bitsteam copy)",
+    "options": [
+      {
+        "text": "الصورة المادية",
+        "is_correct": false
+      },
+      {
+        "text": "الدليل المادي",
+        "is_correct": false
+      },
+      {
+        "text": "الإستخلاص المادي",
+        "is_correct": false
+      },
+      {
+        "text": "نسخة بت التدفق (bitsteam copy)",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "72",
+    "text": "تعد خوارزمية  (SHA1) أكثر أمانًا من MD5 لأنها تنتج خرج ...... بت",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "160",
+    "options": [
+      {
+        "text": "64",
+        "is_correct": false
+      },
+      {
+        "text": "128",
+        "is_correct": false
+      },
+      {
+        "text": "160",
+        "is_correct": true
+      },
+      {
+        "text": "192",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "73",
+    "text": "أي مما يلي ليس من خصائص عملية تفريغ البيانات؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "ترقيم االقرص الصلب",
+    "options": [
+      {
+        "text": "المسح الجنائي لجميع البيانات الموجودة على محركات الأقراص الصلبة",
+        "is_correct": false
+      },
+      {
+        "text": "ترقيم االقرص الصلب",
+        "is_correct": true
+      },
+      {
+        "text": "فحص أخطاء محرك القرص الصلب",
+        "is_correct": false
+      },
+      {
+        "text": "نسخ أقسام القرص الصلب",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "74",
+    "text": "....... يشير إلى مسار جميع الأجهزة والمحركات التي يمكن القراءة منها أو الكتابة إليها ، والتي يتعرف عليها Linux",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "/dev",
+    "options": [
+      {
+        "text": "/sdb",
+        "is_correct": false
+      },
+      {
+        "text": "/sdx",
+        "is_correct": false
+      },
+      {
+        "text": "/dev",
+        "is_correct": true
+      },
+      {
+        "text": "/sda",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "75",
+    "text": "...... هي أداة  مستقلة  لإكتساب الأدلة يمكن استخدامها لإنشاء صور جنائية وأيضًا إجراء نسخ القرص",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "Guymager",
+    "options": [
+      {
+        "text": "Xplico",
+        "is_correct": false
+      },
+      {
+        "text": "Autospy",
+        "is_correct": false
+      },
+      {
+        "text": "DFF",
+        "is_correct": false
+      },
+      {
+        "text": "Guymager",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "76",
+    "text": "أي من الأدوات التالية لا تستخدم في عملية استعادة الملفات ونحت البيانات؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "Xplico",
+    "options": [
+      {
+        "text": "Foremost",
+        "is_correct": false
+      },
+      {
+        "text": "Scalpel",
+        "is_correct": false
+      },
+      {
+        "text": "Bulk Extractor",
+        "is_correct": false
+      },
+      {
+        "text": "Xplico",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "77",
+    "text": "........ هو إطار عمل للاستجابة للحوادث مفتوح المصدر وعبر الأنظمة الأساسية يأتي مع العديد من المكونات الإضافية المفيدة التي توفر للمحقق ثروة من المعلومات من لقطة من الذاكرة ، والمعروف أيضًا باسم تفريغ الذاكرة",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "Volatility",
+    "options": [
+      {
+        "text": "Foremost",
+        "is_correct": false
+      },
+      {
+        "text": "Scalpel",
+        "is_correct": false
+      },
+      {
+        "text": "Volatility",
+        "is_correct": true
+      },
+      {
+        "text": "Xplico",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "78",
+    "text": "يعطي البرنامج المساعد ...... معلومات حول الصور المستخدمة ، بما في ذلك نظام التشغيل المقترح ونوع الصورة (حزمة الخدمة) ، وعدد المعالجات المستخدمة ، وتاريخ ووقت الصورة.",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "imageinfo",
+    "options": [
+      {
+        "text": "imageinfo",
+        "is_correct": true
+      },
+      {
+        "text": "crashInfo",
+        "is_correct": false
+      },
+      {
+        "text": "dlldump",
+        "is_correct": false
+      },
+      {
+        "text": "callbacks",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "79",
+    "text": "ما هو البرنامج المساعد الذي لا يستخدم  في تحديد  وتحليل العمليات؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "connscan",
+    "options": [
+      {
+        "text": "pslist",
+        "is_correct": false
+      },
+      {
+        "text": "psscan",
+        "is_correct": false
+      },
+      {
+        "text": "psxview",
+        "is_correct": false
+      },
+      {
+        "text": "connscan",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "80",
+    "text": "لا تعرض أداة ...... قائمة بجميع العمليات الجارية فحسب ، بل توفر أيضًا معلومات مفيدة مثل معرف العملية (PID) ومعرف PID الرئيسي (PPID) ، كما تعرض أيضًا وقت بدء العمليات",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "pslist",
+    "options": [
+      {
+        "text": "pstree",
+        "is_correct": false
+      },
+      {
+        "text": "psxview",
+        "is_correct": false
+      },
+      {
+        "text": "psscan",
+        "is_correct": false
+      },
+      {
+        "text": "pslist",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "81",
+    "text": "يعرض الأمر ....... نفس قائمة العمليات مثل الأمر pslist ولكن يتم استخدام المسافة البادئة أيضًا لتحديد العمليات الفرعية والوالدية.",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "pstree",
+    "options": [
+      {
+        "text": "pstree",
+        "is_correct": true
+      },
+      {
+        "text": "psxview",
+        "is_correct": false
+      },
+      {
+        "text": "psscan",
+        "is_correct": false
+      },
+      {
+        "text": "psbranch",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "82",
+    "text": "يعرض الأمر ………. العمليات غير النشطة وحتى المخفية التي يمكن أن تستخدمها البرامج الضارة ، مثل rootkits ، وهي معروفة جيدًا بفعل ذلك لتفادي اكتشاف المستخدمين وبرامج مكافحة الفيروسات.",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "psscan",
+    "options": [
+      {
+        "text": "pstree",
+        "is_correct": false
+      },
+      {
+        "text": "psxview",
+        "is_correct": false
+      },
+      {
+        "text": "psscan",
+        "is_correct": true
+      },
+      {
+        "text": "psbranch",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "83",
+    "text": "يسرد الأمر ........ الاتصالات النشطة في تلك النقطة الزمنية ، ويعرض عناوين IP المحلية والبعيدة مع المنافذ و PID",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "connections",
+    "options": [
+      {
+        "text": "connections",
+        "is_correct": true
+      },
+      {
+        "text": "connscan",
+        "is_correct": false
+      },
+      {
+        "text": "sockets",
+        "is_correct": false
+      },
+      {
+        "text": "IP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "84",
+    "text": "مكن أيضًا تشغيل البرنامج المساعد malfind مباشرة على العمليات باستخدام مفتاح التبديل .......",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "p",
+    "options": [
+      {
+        "text": "p",
+        "is_correct": true
+      },
+      {
+        "text": "f",
+        "is_correct": false
+      },
+      {
+        "text": "h",
+        "is_correct": false
+      },
+      {
+        "text": "i",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "85",
+    "text": "يعد تخزين المعدات الحساسة مثل محركات الأقراص الثابتة ومحركات الأقراص المحمولة في أكياس مقاومة للكهرباء الاستاتيكية وأغلفة واقية أحد الإرشادات للتجميع المادي والحفظ",
+    "type": "صح وخطأ",
+    "difficulty": "صعب",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "86",
+    "text": "بالنسبة لأجهزة الغير موصلة بالتيار الكهربائي ، يجب علينا تصوير وتسجيل الشاشة وجميع البرامج والبيانات والوقت وعناصر سطح المكتب المرئية.",
+    "type": "صح وخطأ",
+    "difficulty": "صعب",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "87",
+    "text": "إذا تم تدريب المستجيب الأول على جمع الأدلة وحفظها ، فيمكنه أيضًا بدء عملية الحصول على ما يمكن اعتباره دليلًا ماديًا.",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "88",
+    "text": "وسائط التخزين الثابتة والقابلة للإزالة هي أمثلة على الوسائط المادية",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "89",
+    "text": "يمكن حاليًا عرض حركة المرور المشفرة باستخدام طبقة مآخذ التوصيل الآمنة (SSL) باستخدام Xplico.",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "90",
+    "text": "الجملة الصحيحة لوصف القراصنة ذات القبعات البيضاء هي",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "اختبار الاختراق",
+    "correct_answer": "احترافيين في مجال الأمن",
+    "options": [
+      {
+        "text": "احترافيين في مجال الأمن",
+        "is_correct": true
+      },
+      {
+        "text": "ذات قبعات سوداء سابقين",
+        "is_correct": false
+      },
+      {
+        "text": "ذات قبعات رمادية سابقين",
+        "is_correct": false
+      },
+      {
+        "text": "المهاجم الضار",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "91",
+    "text": "أول مراحل القرصنة هي",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "اختبار الاختراق",
+    "correct_answer": "الاستطلاع",
+    "options": [
+      {
+        "text": "الهجوم",
+        "is_correct": false
+      },
+      {
+        "text": "المحافظة على الوصول",
+        "is_correct": false
+      },
+      {
+        "text": "الاستطلاع",
+        "is_correct": true
+      },
+      {
+        "text": "الفحص",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "92",
+    "text": "ما نواع اختبارات الاختراق الأخلاقي التي تخص البنية الأساسية الفيزيائية؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "اختبار الاختراق",
+    "correct_answer": "الوصول الفيزيائي",
+    "options": [
+      {
+        "text": "شبكة داخلية",
+        "is_correct": false
+      },
+      {
+        "text": "شبكة التحكم عن بعد",
+        "is_correct": false
+      },
+      {
+        "text": "شبكة خارجية",
+        "is_correct": false
+      },
+      {
+        "text": "الوصول الفيزيائي",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "93",
+    "text": "ما هو نوع القراصنة الأعلى خطورة على شبكتك؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "اختبار الاختراق",
+    "correct_answer": "الموظفون الساخطون",
+    "options": [
+      {
+        "text": "الموظفون الساخطون",
+        "is_correct": true
+      },
+      {
+        "text": "القراصنة ذوي القبعات البيضاء",
+        "is_correct": false
+      },
+      {
+        "text": "القراصنة ذوي القبعات الرمادية",
+        "is_correct": false
+      },
+      {
+        "text": "المراهقون العابثون",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "94",
+    "text": "Mac Address Spoofing يمثل أي نوع من الهجمات",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "اختبار الاختراق",
+    "correct_answer": "Authentication",
+    "options": [
+      {
+        "text": "Encryption",
+        "is_correct": false
+      },
+      {
+        "text": "Brute-force",
+        "is_correct": false
+      },
+      {
+        "text": "Authentication",
+        "is_correct": true
+      },
+      {
+        "text": "Social Engineering",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "95",
+    "text": "الهاكر الذي يستخدم مهارات الاختراق لأغراض تدميرية هو",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "اختبار الاختراق",
+    "correct_answer": "Cracker",
+    "options": [
+      {
+        "text": "Cracker",
+        "is_correct": true
+      },
+      {
+        "text": "Ethical hacker",
+        "is_correct": false
+      },
+      {
+        "text": "Script kiddie",
+        "is_correct": false
+      },
+      {
+        "text": "White-hat hacker",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "96",
+    "text": "الأداة التي تؤدي للقيام بالبصمة الغير مكتشفة footprinting undetected",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "اختبار الاختراق",
+    "correct_answer": "Whois search",
+    "options": [
+      {
+        "text": "Whois search",
+        "is_correct": true
+      },
+      {
+        "text": "Traceroute",
+        "is_correct": false
+      },
+      {
+        "text": "Ping sweeb",
+        "is_correct": false
+      },
+      {
+        "text": "Host scanning",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "97",
+    "text": "أي من الخيارات التالية يمثل نوع من الهندسة الاجتماعية Social engineering؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "اختبار الاختراق",
+    "correct_answer": "Shoulder surfing",
+    "options": [
+      {
+        "text": "Shoulder surfing",
+        "is_correct": true
+      },
+      {
+        "text": "User identification",
+        "is_correct": false
+      },
+      {
+        "text": "System monitoring",
+        "is_correct": false
+      },
+      {
+        "text": "Face-to-face communication",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "98",
+    "text": "أفضل طريقة لمنع اختراقات الهندسة الاجتماعية في مؤسسة ما :",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "اختبار الاختراق",
+    "correct_answer": "تدريب وتعليم الموظفين",
+    "options": [
+      {
+        "text": "إعداد جدار الحماية لمنع فحص المنافذ",
+        "is_correct": false
+      },
+      {
+        "text": "تكوين IDS لاكتشاف محاولات التسلل",
+        "is_correct": false
+      },
+      {
+        "text": "زيادة عدد العاملين في الدعم الفني والمساعدة",
+        "is_correct": false
+      },
+      {
+        "text": "تدريب وتعليم الموظفين",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "99",
+    "text": "استخدام النوافذ المنبثقة لاصطياد المستخدم لأخذ معلومات تعتبر من النوع :",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "اختبار الاختراق",
+    "correct_answer": "الحاسوبي",
+    "options": [
+      {
+        "text": "البشري",
+        "is_correct": false
+      },
+      {
+        "text": "الحاسوبي",
+        "is_correct": true
+      },
+      {
+        "text": "غير الفني",
+        "is_correct": false
+      },
+      {
+        "text": "قسري",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "100",
+    "text": "ما هي أداة جمع المعلومات لكي تحصل المعلومات بغض النظر عن نظام التشغيل لخادم الويب؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "اختبار الاختراق",
+    "correct_answer": "Nslookup",
+    "options": [
+      {
+        "text": "Nslookup",
+        "is_correct": true
+      },
+      {
+        "text": "DNSlookup",
+        "is_correct": false
+      },
+      {
+        "text": "Tracert",
+        "is_correct": false
+      },
+      {
+        "text": "Netcraft",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "101",
+    "text": "ما هي الأداة التي تعتبر مصدر جيد للمعلومات عن أسماء وعناوين الموظفين ؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "اختبار الاختراق",
+    "correct_answer": "Whois",
+    "options": [
+      {
+        "text": "Nslookup",
+        "is_correct": false
+      },
+      {
+        "text": "Whois",
+        "is_correct": true
+      },
+      {
+        "text": "Tracert",
+        "is_correct": false
+      },
+      {
+        "text": "Netcraft",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "102",
+    "text": "الأداة التي سوف تعمل على التداول العام للشركات؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "اختبار الاختراق",
+    "correct_answer": "EDGAR",
+    "options": [
+      {
+        "text": "EDGAR",
+        "is_correct": true
+      },
+      {
+        "text": "NSlookup",
+        "is_correct": false
+      },
+      {
+        "text": "Netcraft",
+        "is_correct": false
+      },
+      {
+        "text": "Whois",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "103",
+    "text": "ما هو رقم المنفذ Port No لبروتوكول نقل الملفات FTP؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "اختبار الاختراق",
+    "correct_answer": "21",
+    "options": [
+      {
+        "text": "21",
+        "is_correct": true
+      },
+      {
+        "text": "25",
+        "is_correct": false
+      },
+      {
+        "text": "23",
+        "is_correct": false
+      },
+      {
+        "text": "80",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "104",
+    "text": "ما هو رقم المنفذ Port No لبروتوكول HTTPS؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "اختبار الاختراق",
+    "correct_answer": "443",
+    "options": [
+      {
+        "text": "21",
+        "is_correct": false
+      },
+      {
+        "text": "23",
+        "is_correct": false
+      },
+      {
+        "text": "25",
+        "is_correct": false
+      },
+      {
+        "text": "443",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "105",
+    "text": "ثلاثة أنواع من Scanning الفحص:",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "اختبار الاختراق",
+    "correct_answer": "Port, network, and vulnerability",
+    "options": [
+      {
+        "text": "Port, network, and vulnerability",
+        "is_correct": true
+      },
+      {
+        "text": "Port, network, and services",
+        "is_correct": false
+      },
+      {
+        "text": "Grey, black, and white hat",
+        "is_correct": false
+      },
+      {
+        "text": "Server, client, and network",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "106",
+    "text": "ما هو الأمر المناسب لكي يؤدي فحص Nmap SYN كل  5 دقائق؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "اختبار الاختراق",
+    "correct_answer": "nmap -sS –paranoid",
+    "options": [
+      {
+        "text": "nmap -ss – paranoid",
+        "is_correct": false
+      },
+      {
+        "text": "nmap -sS –paranoid",
+        "is_correct": true
+      },
+      {
+        "text": "nmap -sS –fast",
+        "is_correct": false
+      },
+      {
+        "text": "namp -sS –sneaky",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "107",
+    "text": "يستخدم أمر TCP RST في:",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "اختبار الاختراق",
+    "correct_answer": "إعادة اتصال TCP",
+    "options": [
+      {
+        "text": "بدأ اتصال TCP",
+        "is_correct": false
+      },
+      {
+        "text": "إنهاء اتصال TCP",
+        "is_correct": false
+      },
+      {
+        "text": "تخزين الاتصال في الحالة السابقة",
+        "is_correct": false
+      },
+      {
+        "text": "إعادة اتصال TCP",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "108",
+    "text": "تعريف enumeration هو",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "اختبار الاختراق",
+    "correct_answer": "تحديد المستخدمين وأسماء الأجهزة على الشبكة",
+    "options": [
+      {
+        "text": "كسر كلمة المرور",
+        "is_correct": false
+      },
+      {
+        "text": "تحديد النظم النشطة على الشبكة",
+        "is_correct": false
+      },
+      {
+        "text": "تحديد المستخدمين وأسماء الأجهزة على الشبكة",
+        "is_correct": true
+      },
+      {
+        "text": "تحديد أجهزة الراوتر وجدران الحماية",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "109",
+    "text": "الأداة أو الأمر الذي يستخدم لمعرفة اسم المستخدم من خلال SID؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "اختبار الاختراق",
+    "correct_answer": "SID2User",
+    "options": [
+      {
+        "text": "UsertoSID",
+        "is_correct": false
+      },
+      {
+        "text": "Userenum",
+        "is_correct": false
+      },
+      {
+        "text": "SID2User",
+        "is_correct": true
+      },
+      {
+        "text": "GetAcct",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "110",
+    "text": "الأداة التي تستخدم لتنفيذ نقل منطقة DNS على نظام الويندوز ؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "اختبار الاختراق",
+    "correct_answer": "NSlookup",
+    "options": [
+      {
+        "text": "NSlookup",
+        "is_correct": true
+      },
+      {
+        "text": "DNSlookup",
+        "is_correct": false
+      },
+      {
+        "text": "Whois",
+        "is_correct": false
+      },
+      {
+        "text": "IPconfig",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "111",
+    "text": "ملف Cookie الذي يحتوي على البيانات الشخصية على صفحة الويب يمكن أن يتم سرقته بواسطة:",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "اختبار الاختراق",
+    "correct_answer": "المهاجم",
+    "options": [
+      {
+        "text": "مختبر الاختراق",
+        "is_correct": false
+      },
+      {
+        "text": "المهاجم",
+        "is_correct": true
+      },
+      {
+        "text": "الفيروس",
+        "is_correct": false
+      },
+      {
+        "text": "جدار الحماية",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "112",
+    "text": "من القوانين التي تنظم سلوكيات الحوسبة السحابية هي عدم الاطمئنان وخوف الناس من حالة عدم التأكد وهذا يسمى",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "Fear of Change",
+    "options": [
+      {
+        "text": "Flat-Rate Bias",
+        "is_correct": false
+      },
+      {
+        "text": "Fear of Change",
+        "is_correct": true
+      },
+      {
+        "text": "Need for Status",
+        "is_correct": false
+      },
+      {
+        "text": "Loose Coupling",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "113",
+    "text": "هي خدمة تقديم الأجهزة الافتراضية و ونظم التشغيل والتطبيقات والخدمات وإطارات العمل للتطوير والعمليات وهياكل التحكم.",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "PaaS",
+    "options": [
+      {
+        "text": "PaaS",
+        "is_correct": true
+      },
+      {
+        "text": "IaaS",
+        "is_correct": false
+      },
+      {
+        "text": "SaaS",
+        "is_correct": false
+      },
+      {
+        "text": "XaaS",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "114",
+    "text": "هي خدمة تقديم الأجهزة الافتراضية و المساحة التخزينية الافتراضية والبنية الأساسية والمكونات المادية الأخرى التي يتفاعل معها المستخدم",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "IaaS",
+    "options": [
+      {
+        "text": "PaaS",
+        "is_correct": false
+      },
+      {
+        "text": "IaaS",
+        "is_correct": true
+      },
+      {
+        "text": "SaaS",
+        "is_correct": false
+      },
+      {
+        "text": "XaaS",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "115",
+    "text": "هي بيئة تشغيل متكاملة تشمل التطبيقات والإدارة وواجهة المستخدم.",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "SaaS",
+    "options": [
+      {
+        "text": "PaaS",
+        "is_correct": false
+      },
+      {
+        "text": "IaaS",
+        "is_correct": false
+      },
+      {
+        "text": "SaaS",
+        "is_correct": true
+      },
+      {
+        "text": "XaaS",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "116",
+    "text": "الاتصال بالمكونات والتطبيقات المتكاملة المتعددة يتم التفاعل من خلال وسيط عن طريق:",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "Loose Coupling",
+    "options": [
+      {
+        "text": "Loose Coupling",
+        "is_correct": true
+      },
+      {
+        "text": "Eucalyptus",
+        "is_correct": false
+      },
+      {
+        "text": "Static Workload",
+        "is_correct": false
+      },
+      {
+        "text": "Abstraction",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "117",
+    "text": "يعتبر Google Docs مثال على خدمات (HaaS)",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "118",
+    "text": "هي ميزة يقوم بها (Amazon Elastic (EC2",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "القدرة على زيادة أو إنقاص المكونات المادية في  دقائق.",
+    "options": [
+      {
+        "text": "القدرة على زيادة أو إنقاص المكونات المادية في  دقائق.",
+        "is_correct": true
+      },
+      {
+        "text": "الوصول إلى الشبكة",
+        "is_correct": false
+      },
+      {
+        "text": "زيادة التكلفة",
+        "is_correct": false
+      },
+      {
+        "text": "نقل الملفات عبر الشبكة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "119",
+    "text": "الحوسبة السحابية تحتاج إلى تكلفة عالية",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "120",
+    "text": "ميكروسوفت أون لاينMicrosoftOnline يعتبر مثالا على SaaS",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "121",
+    "text": "الحوسبة السحابية مرتبطة أكثر بأي من الخيارات التالية:",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "الويب",
+    "options": [
+      {
+        "text": "ملحقات الحاسب",
+        "is_correct": false
+      },
+      {
+        "text": "أجهزة الحاسب",
+        "is_correct": false
+      },
+      {
+        "text": "الويب",
+        "is_correct": true
+      },
+      {
+        "text": "البرمجيات",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "122",
+    "text": "الشبكات الاجتماعية تعتمد بشدة على الحوسبة السحابية",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "123",
+    "text": "نموذج .......................سحابة الكترونية تجمع ما بين الخصائص الإيجابية في الفضاء العام والخاص وبنفس الوقت تسمح باستقلالية تامة للمكونين على الرغم من السماح بتبادل البيانات والتطبيقات بينهما بشكل سهل وكأنهما كيان واحد.",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "السحابة الهجينة Hybrid",
+    "options": [
+      {
+        "text": "السحابة العامة Public",
+        "is_correct": false
+      },
+      {
+        "text": "السحابة الخاصةPrivate",
+        "is_correct": false
+      },
+      {
+        "text": "السحابة الهجينة Hybrid",
+        "is_correct": true
+      },
+      {
+        "text": "سحابة التواصل الاجتماعيCommunity",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "124",
+    "text": "فيها تكون البنية التحتية للسحابة مقتصرة ومخصصة لمؤسسة وحيدة فقط لا غير. ما هي؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "السحابة الخاصةPrivate",
+    "options": [
+      {
+        "text": "السحابة العامة Public",
+        "is_correct": false
+      },
+      {
+        "text": "السحابة الخاصةPrivate",
+        "is_correct": true
+      },
+      {
+        "text": "السحابة الهجينة Hybrid",
+        "is_correct": false
+      },
+      {
+        "text": "سحابة التواصل الاجتماعيCommunity",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "125",
+    "text": "...................تكون متاحة للاستخدام المفتوح لكل الناس وغالبا تكون مجانا أو بمقابل مادي رخيص.",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "السحابة العامة Public",
+    "options": [
+      {
+        "text": "السحابة العامة Public",
+        "is_correct": true
+      },
+      {
+        "text": "السحابة الخاصةPrivate",
+        "is_correct": false
+      },
+      {
+        "text": "السحابة الهجينة Hybrid",
+        "is_correct": false
+      },
+      {
+        "text": "سحابة التواصل الاجتماعيCommunity",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "126",
+    "text": "تكون مقتصرة على مجموعة من المؤسسات التي لها نفس الهدف ونفس المتطلبات مثل المؤسسات الحكومية.",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "Community Cloud",
+    "options": [
+      {
+        "text": "Public cloud",
+        "is_correct": false
+      },
+      {
+        "text": "Private Cloud",
+        "is_correct": false
+      },
+      {
+        "text": "Hybrid Cloud",
+        "is_correct": false
+      },
+      {
+        "text": "Community Cloud",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "127",
+    "text": "جزءاً مهماً من منظومة الإنترنت. حيث يسمح بإصدار المواقع الإلكترونية ونشر المعلومات بدون الكشف عن هوية الناشر أو موقعه:",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "Dark Web",
+    "options": [
+      {
+        "text": "Cloud Computing",
+        "is_correct": false
+      },
+      {
+        "text": "World Wide Web",
+        "is_correct": false
+      },
+      {
+        "text": "Social Engineering",
+        "is_correct": false
+      },
+      {
+        "text": "Dark Web",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "128",
+    "text": "يمكن استخدام ..................... للمشاركة بالمعلومات بشكل سري دون التعرف على هوية وموقع المرسل.",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "Deep Web",
+    "options": [
+      {
+        "text": "Cloud Computing",
+        "is_correct": false
+      },
+      {
+        "text": "Deep Web",
+        "is_correct": true
+      },
+      {
+        "text": "Social Engineering",
+        "is_correct": false
+      },
+      {
+        "text": "Dark Web",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "129",
+    "text": "من منتجات Google ويمكن خلالها الاطلاع على الخرائط والمواقع الجغرافية على الانترنت مباشرة. ما هي؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "Earth",
+    "options": [
+      {
+        "text": "Finance",
+        "is_correct": false
+      },
+      {
+        "text": "Earth",
+        "is_correct": true
+      },
+      {
+        "text": "Docs",
+        "is_correct": false
+      },
+      {
+        "text": "Code",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "130",
+    "text": "تعرض قائمة بجميع البيانات حول أسواق الأوراق المالية وصناديق الاستثمار المشتركة والمؤشرات المالية وغيرها من البيانات المالية المتوفّرة من خلال Google.",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "Finance",
+    "options": [
+      {
+        "text": "Finance",
+        "is_correct": true
+      },
+      {
+        "text": "Earth",
+        "is_correct": false
+      },
+      {
+        "text": "Docs",
+        "is_correct": false
+      },
+      {
+        "text": "Code",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "131",
+    "text": "من منتجات Google ويفيد في إنشاء نظم إدارة المعلومات الصحية",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "Google Health",
+    "options": [
+      {
+        "text": "Finance",
+        "is_correct": false
+      },
+      {
+        "text": "Google Earth",
+        "is_correct": false
+      },
+      {
+        "text": "Docs",
+        "is_correct": false
+      },
+      {
+        "text": "Google Health",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "132",
+    "text": "هو منتج من منتجات Google يفيد في تحميل الأبحاث العلمية في مختلف التخصصات.",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "Scholar",
+    "options": [
+      {
+        "text": "Finance",
+        "is_correct": false
+      },
+      {
+        "text": "Google Earth",
+        "is_correct": false
+      },
+      {
+        "text": "Scholar",
+        "is_correct": true
+      },
+      {
+        "text": "Google Health",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "133",
+    "text": "هو منتج من منتجات Google يفيد في البحث عن المقاطع المرئية على شبكة الانترنت.",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "Video",
+    "options": [
+      {
+        "text": "Voice",
+        "is_correct": false
+      },
+      {
+        "text": "Video",
+        "is_correct": true
+      },
+      {
+        "text": "Multimedia",
+        "is_correct": false
+      },
+      {
+        "text": "Google Health",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "134",
+    "text": "يعتبر Google APP مثالا على Cloud IaaS.",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "135",
+    "text": "المكان الآمن لحماية خدمات الويب الخاصة بأمازون لمستخدميها هو AWS Security Center",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "136",
+    "text": "هي تقنية رئيسية لحماية البيانات التي يتم تخزينها في السحابة الالكترونية",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "التشفير",
+    "options": [
+      {
+        "text": "المصادقة",
+        "is_correct": false
+      },
+      {
+        "text": "التحكم في الوصول",
+        "is_correct": false
+      },
+      {
+        "text": "التشفير",
+        "is_correct": true
+      },
+      {
+        "text": "فك التشفير",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "137",
+    "text": "من الخدمات التي يقدمها Windows Azure security",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "Active Directory Federation Services 2.0",
+    "options": [
+      {
+        "text": "Active Directory Federation Services 2.0",
+        "is_correct": true
+      },
+      {
+        "text": "Data services",
+        "is_correct": false
+      },
+      {
+        "text": "Data abstraction services",
+        "is_correct": false
+      },
+      {
+        "text": "Governance",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "138",
+    "text": "من عيوب الحوسبة السحابية أنه هناك دائمًا خطر يتمثل في إمكانية وصول أشخاص آخرين إلى بيانات المستخدم",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "139",
+    "text": "من خصائص خدمات السحابة الالكترونية :",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "Storage",
+    "options": [
+      {
+        "text": "Active Directory Federation Services 2.0",
+        "is_correct": false
+      },
+      {
+        "text": "Windows Azure security",
+        "is_correct": false
+      },
+      {
+        "text": "Governance",
+        "is_correct": false
+      },
+      {
+        "text": "Storage",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "140",
+    "text": "من الأمثلة التي تقدم خدمة نقل الملفات في الحوسبة السحابية هو YouTube",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "141",
+    "text": "خدمة 4Shared من خدمات التخزين السحابي التي يتم إدارتها.",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن السحابة والخادم",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "142",
+    "text": "إن كنت ترغب في تأمين محتوى بريدك الالكتروني ومنع الأشخاص غير المصرح لهم بالوصول إليه. أي مما يلي يساعدك على القيام بذلك؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "التشفير Encryption",
+    "options": [
+      {
+        "text": "ارسال بريد الكتروني غير مرغوب فيهSpamming",
+        "is_correct": false
+      },
+      {
+        "text": "فك التشفير   Decryption",
+        "is_correct": false
+      },
+      {
+        "text": "كسر الحماية  Cracking",
+        "is_correct": false
+      },
+      {
+        "text": "التشفير Encryption",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "143",
+    "text": "يمكن لقراصنة الحاسب أن يتلاعبوا بأي جهاز حاسب عند اتصاله بالشبكة. أي من التالي هو أفضل وصف لمصطلح قراصنة الحاسب؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "الوصول إلى موارد النظام بطريقة غير مصرح بها خلال الاتصال بالشبكة.",
+    "options": [
+      {
+        "text": "التظاهر بأنك شخص آخر عن طريق انتحال هوية هذا الشخص",
+        "is_correct": false
+      },
+      {
+        "text": "الوصول إلى موارد النظام بطريقة غير مصرح بها خلال الاتصال بالشبكة.",
+        "is_correct": true
+      },
+      {
+        "text": "تبادل ومشاركة الملفات والموارد مع أجهزة الحاسب الأخرى الموجودة داخل الشبكة",
+        "is_correct": false
+      },
+      {
+        "text": "متابعة وحل المشاكل الفنية التي تواجه أجهزة الحاسب",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "144",
+    "text": "قام أحد مستخدمي الانترنت بزيارة موقع الكتروني معروف فتم إعادة توجيهه إلى موقع آخر زائف دون علمه ويطلب منه ادخال اسم المستخدم وكلمة المرور. ما هو المصطلح الذي يطلق على هذا النوع من الاحتيال؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "تزوير عناوين الانترنت Pharming",
+    "options": [
+      {
+        "text": "الخداع Phishing",
+        "is_correct": false
+      },
+      {
+        "text": "التزوير المالي Skimming",
+        "is_correct": false
+      },
+      {
+        "text": "تزوير عناوين الانترنت Pharming",
+        "is_correct": true
+      },
+      {
+        "text": "الغش والتدليس Pretexting",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "145",
+    "text": "اختر من الحالات التالية مثالا على الهندسة الاجتماعية (Social Engineering)؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "زميل لك في العمل يحثك على كشف كلمة المرور الخاصة بالوصول إلى الملفات السرية في حالة الطواريء ليتمكن من استخدامها لاحقا في تحقيق مكاسب شخصية.",
+    "options": [
+      {
+        "text": "موقع تواصل اجتماعي يطلب منك اسم المستخدم وكلمة المرور من اختيارك عند تسجيل اشتراكك به.",
+        "is_correct": false
+      },
+      {
+        "text": "زميلك في العمل يحثك على إجراء مكالمة مرئية فورا لعقد اجتماع طاريء لمناشة مشاكل خاصة بالعمل.",
+        "is_correct": false
+      },
+      {
+        "text": "تلقيت رسالة نصية تخبرك بأحدث العروض الترويجية التي يمكنك الاستفادة منها.",
+        "is_correct": false
+      },
+      {
+        "text": "زميل لك في العمل يحثك على كشف كلمة المرور الخاصة بالوصول إلى الملفات السرية في حالة الطواريء ليتمكن من استخدامها لاحقا في تحقيق مكاسب شخصية.",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "146",
+    "text": "أرسل لك برنامج مكافحة الفيروسات الخاص بك تحذيرا من وجود ملف مشبوه يمثل خطرا محتملا على جهاز الحاسب. ما هو الاجراء الصحيح الذي ينبغي عليك القيام به لعزل هذا الملف؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "وضعه في الحجر الصحي.",
+    "options": [
+      {
+        "text": "نقله إلى مجلد آخر.",
+        "is_correct": false
+      },
+      {
+        "text": "وضعه في الحجر الصحي.",
+        "is_correct": true
+      },
+      {
+        "text": "تشفيره",
+        "is_correct": false
+      },
+      {
+        "text": "حذفه",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "147",
+    "text": "اختر المصطلح المناسب للتعريف التالي : هي تقنية من تقنيات التحقق والمصادقة على هوية الأشخاص تلقائيا على أساس الصفات الفسيولوجية والتشريحية الخاصة لكل شخص؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "قارئات العلامات البيولوجية (Biometrics)",
+    "options": [
+      {
+        "text": "اسم المستخدم وكلمة المرور (Username and Password)",
+        "is_correct": false
+      },
+      {
+        "text": "قارئات العلامات البيولوجية (Biometrics)",
+        "is_correct": true
+      },
+      {
+        "text": "رقم التعريف الشخصي (Pin Code).",
+        "is_correct": false
+      },
+      {
+        "text": "رقم التحقق من الهوية (ID Card)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "148",
+    "text": "ترغب في ارسال مستند يحتوي على تفاصيل حسابك المصرفي، ما الذي يجب عليك مراعاته عند ارسال مثل هذا النوع من المعلومات؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "السرية",
+    "options": [
+      {
+        "text": "التنسيق",
+        "is_correct": false
+      },
+      {
+        "text": "السرية",
+        "is_correct": true
+      },
+      {
+        "text": "الجودة",
+        "is_correct": false
+      },
+      {
+        "text": "مزود الانترنت",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "149",
+    "text": "أي مما يلي أحد المباديء الأساسية المعروفة والمرتبطة بالحماية والمحافظة على أمن البيانات وسياسة الخصوصية؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "التكامل",
+    "options": [
+      {
+        "text": "التكامل",
+        "is_correct": true
+      },
+      {
+        "text": "الإتاحة",
+        "is_correct": false
+      },
+      {
+        "text": "مساحة التخزين",
+        "is_correct": false
+      },
+      {
+        "text": "الموقع الجغرافي",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "150",
+    "text": "أي من العبارات التالية صحيح فيما يتعلق بالتهديدات الأمنية التي يمكن أن تتعرض لها البيانات بسبب استخدام الحوسبة السحابية",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "يمكن أن تتعرض البيانات الشخصية للتلاعب عن طريق مستخدم غير معروف دون موافقة أصحابها.",
+    "options": [
+      {
+        "text": "يمكن أن تتعرض البيانات الشخصية للتلاعب عن طريق مستخدم غير معروف دون موافقة أصحابها.",
+        "is_correct": true
+      },
+      {
+        "text": "يمكن نشر البيانات الشخصية مع العديد من المستخدمين المصرح لهم من أي مكان.",
+        "is_correct": false
+      },
+      {
+        "text": "عند حدوث عطل مفاجيء في جهاز الحاسب تصبح البيانات الشخصية المستخدمة باستخدام خدمة الحوسبة السحابية غير قابلة للاسترجاع.",
+        "is_correct": false
+      },
+      {
+        "text": "لا يمكن تحديث البيانات الشخصية المخزنة باستخدام خدمة الحوسبة السحابية وهذا سيؤدي إلى فقدان قيمة هذه البيانات مع مرور الوقت.",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "151",
+    "text": "ما الذي يدفعك لحماية بياناتك الشخصية والمالية أثناء استخدام الانترنت ؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "خوفا من سرقة الهوية على الانترنت",
+    "options": [
+      {
+        "text": "الرقابة الأسرية",
+        "is_correct": false
+      },
+      {
+        "text": "خوفا من سرقة الهوية على الانترنت",
+        "is_correct": true
+      },
+      {
+        "text": "الوسوم الخفية",
+        "is_correct": false
+      },
+      {
+        "text": "ضغط البيانات",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "152",
+    "text": "ما المصطلح الذي يطلق على مجموعة كبيرة من البرامج الضارة التي تهدف إلى إتلاف جهاز الحاسب؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "البرمجيات الخبيثة",
+    "options": [
+      {
+        "text": "الملفات التالفة",
+        "is_correct": false
+      },
+      {
+        "text": "برمجيات الحاسب",
+        "is_correct": false
+      },
+      {
+        "text": "تطبيقات الحاسب",
+        "is_correct": false
+      },
+      {
+        "text": "البرمجيات الخبيثة",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "153",
+    "text": "هو أحد البرمجيات الخبيثة التي تم تصميمها لإصابة الحاسب دون أن يتم ملاحظتها وتهدف إلى التناسخ والانتقال إلى أجهزة حاسب أخرى من أجل إتلافها.",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "البرامج الدودية",
+    "options": [
+      {
+        "text": "الملفات التالفة",
+        "is_correct": false
+      },
+      {
+        "text": "برمجيات الحاسب",
+        "is_correct": false
+      },
+      {
+        "text": "البرامج الدودية",
+        "is_correct": true
+      },
+      {
+        "text": "الفيروسات",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "154",
+    "text": "ما هي الفائدة التي تعود من القيام بتحديث متصفح الانترنت الموجود في جهاز الحاسب بالنظام؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "عرض محتوى المواقع الالكترونية التي تحتوي على ميزات متقدمة بشكل صحيح",
+    "options": [
+      {
+        "text": "منح تلف الملفات التي يتم تحميلها من الانترنت.",
+        "is_correct": false
+      },
+      {
+        "text": "تقليل مقدار المساحة المخصصة لتخزين الملفات على الحاسب.",
+        "is_correct": false
+      },
+      {
+        "text": "عرض محتوى المواقع الالكترونية التي تحتوي على ميزات متقدمة بشكل صحيح",
+        "is_correct": true
+      },
+      {
+        "text": "التقليل من الاصابة بمرض الاجهاد البصري أثناء تصفح الانترنت",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "155",
+    "text": "عند استخدام أحد برامج تشفير البيانات ، ما الذي يمكن أن يحدث نتيجة فقدان أحد مفاتيح فك التشفير؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "سيتعذر فتح البيانات عند فقدان مفاتيح فك التشفير",
+    "options": [
+      {
+        "text": "سيتم استرجاع البيانات دون الحاجة إلى وجود مفاتيح فك التشفير.",
+        "is_correct": false
+      },
+      {
+        "text": "ستقوم الملفات المشفرة بتوفير مزيد من المساحة التخزينية.",
+        "is_correct": false
+      },
+      {
+        "text": "سيتعذر فتح البيانات عند فقدان مفاتيح فك التشفير",
+        "is_correct": true
+      },
+      {
+        "text": "ستكون البيانات المشفرة أكثر أمنا في حال فقدان مفاتيح فك التشفير",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "156",
+    "text": "يمكن للحاسب أن يتعرض لبعض التهديدات الأمنية أثناء الاتصال بالشبكة ، أي مما يلي هو أحد هذه التهديدات",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "إمكانية تعرض الخصصية لخطر الكشف",
+    "options": [
+      {
+        "text": "امكانية ارسال الملفات السرية مع تعيين درجة عالية من الأولوية",
+        "is_correct": false
+      },
+      {
+        "text": "إمكانية تعرض الخصصية لخطر الكشف",
+        "is_correct": true
+      },
+      {
+        "text": "إمكانية ازالة فيروسات الحاسب",
+        "is_correct": false
+      },
+      {
+        "text": "إمكانية تحديث برامج الحاسب",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "157",
+    "text": "أي من الخيارات التالية يسمح لجهاز الهاتف المتحرك بالاتصال بالانترنت عن طريق شبكة بيانات خاصة بهاتف متحرك آخر؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "نقطة الاتصال الشخصية (Personal Hotspot)",
+    "options": [
+      {
+        "text": "نقطة الاتصال الشخصية (Personal Hotspot)",
+        "is_correct": true
+      },
+      {
+        "text": "تطبيق الهاتف المتحرك (Mobile App)",
+        "is_correct": false
+      },
+      {
+        "text": "نظام الملاحة العالمي (GPS)",
+        "is_correct": false
+      },
+      {
+        "text": "خدمة Bluetooth",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "158",
+    "text": "ما الذي يمكن أن يحدث نتيجة استخدام الاصدارات القديمة لبرامج الحاسب والتي لم تعد تتلقى أي تحديثات؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "ستواجه هذه البرامج أخطاء ومشكلات عدم التوافق مع النظام.",
+    "options": [
+      {
+        "text": "ستعمل هذه البرامج على تعزيز القدرة لصد أي إختراقات أمنية للنظام والجهاز.",
+        "is_correct": false
+      },
+      {
+        "text": "ستقوم هذه البرامج برفع مستوى الأمان والحماية للبيانات والمستخدم.",
+        "is_correct": false
+      },
+      {
+        "text": "ستواجه هذه البرامج أخطاء ومشكلات عدم التوافق مع النظام.",
+        "is_correct": true
+      },
+      {
+        "text": "ستقوم هذه البرامج بتحسين أداء الحاسب.",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "159",
+    "text": "ما هو البرنامج الذي يقوم بتخزين العديد من أسماء المستخدمين وكلمات المرور معا في مكان واحد",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "إدارة كلمات المرور",
+    "options": [
+      {
+        "text": "جهاز تخزين رمز الوصول المميز",
+        "is_correct": false
+      },
+      {
+        "text": "سياسة كلمات المرور",
+        "is_correct": false
+      },
+      {
+        "text": "إدارة كلمات المرور",
+        "is_correct": true
+      },
+      {
+        "text": "خدمة التخزين السحابي",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "160",
+    "text": "أي مما يلي أحد النتائج المترتبة على استخدام التطبيقات الموجودة في متاجر التطبيقات الغير رسمية",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "وسوم خفية",
+    "options": [
+      {
+        "text": "حماية البيانات",
+        "is_correct": false
+      },
+      {
+        "text": "وسوم خفية",
+        "is_correct": true
+      },
+      {
+        "text": "تحديثات مجانية",
+        "is_correct": false
+      },
+      {
+        "text": "خصوصية الحساب",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "161",
+    "text": "ترغب في التحقق من مدي موثوقية الموقع الالكتروني الموجود في الصورة أدناه ، ما هي الطريقة المناسبة التي تمكنك من التحقق من موثوقية هذا الموقع بالنظر إلى الجزء المحدد في الصورة؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "صفحة عنوان URL وشرعية مصدره",
+    "options": [
+      {
+        "text": "محتوى الموقع حديث ويتم تحديثه باستمرار",
+        "is_correct": false
+      },
+      {
+        "text": "محتوى الموقع ذو جودة جيدة.",
+        "is_correct": false
+      },
+      {
+        "text": "صفحة عنوان URL وشرعية مصدره",
+        "is_correct": true
+      },
+      {
+        "text": "المعلومات الخاصة بالشركة المالكة للموقع معروضة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "162",
+    "text": "ترغب في حماية أطفالك من أي محتوى غير أخللاقي على الانترنت ، أي من البرامج التالية يمكن أن تساعد في ذلك؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "برنامج تصفية محتوى الانترنت",
+    "options": [
+      {
+        "text": "برنامج مكافحة الفيروسات",
+        "is_correct": false
+      },
+      {
+        "text": "برنامج تصفية محتوى الانترنت",
+        "is_correct": true
+      },
+      {
+        "text": "واقي شاشة الحاسب",
+        "is_correct": false
+      },
+      {
+        "text": "متصفح انترنت حديث",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "163",
+    "text": "ترغب في إرسال رسالة الكترونية عبر الانترنت ، ما هو الاجراء الأمني الذي ينبغي عليك تطبيقه للمصادقة على صحة الرسالة؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "إضافة توقيع رقمي للرسالة",
+    "options": [
+      {
+        "text": "إضافة توقيع رقمي للرسالة",
+        "is_correct": true
+      },
+      {
+        "text": "إضافة كلمة مرور للشبكة",
+        "is_correct": false
+      },
+      {
+        "text": "إنشاء نسخة رقمية من الرسالة",
+        "is_correct": false
+      },
+      {
+        "text": "إضافة ملف مرفق للرسالة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "164",
+    "text": "ينبغي أن تتوخى الحذر عند فتح مرفقات البريد الالكتروني ، ما هو السبب في ذلك؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "قد تحتوي المرفقات على ملف تنفيذي يمكن أن يتسبب في حدوث ضرر لجهاز الحاسب.",
+    "options": [
+      {
+        "text": "قد تحتوي على معلومات سرية.",
+        "is_correct": false
+      },
+      {
+        "text": "قد تحتوي المرفقات على ملفات خاصة بمستلمين آخرين للبريد.",
+        "is_correct": false
+      },
+      {
+        "text": "قد تحتوي المرفقات على رابط لموقع الكتروني احتيالي.",
+        "is_correct": false
+      },
+      {
+        "text": "قد تحتوي المرفقات على ملف تنفيذي يمكن أن يتسبب في حدوث ضرر لجهاز الحاسب.",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "165",
+    "text": "أي مما يلي يعتبر من مخاطر التراسل الفوري",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "البرمجيات الخبيثة",
+    "options": [
+      {
+        "text": "جدار الحماية",
+        "is_correct": false
+      },
+      {
+        "text": "برمجيات الحاسب",
+        "is_correct": false
+      },
+      {
+        "text": "برنامج الاعلانات المزعجة",
+        "is_correct": false
+      },
+      {
+        "text": "البرمجيات الخبيثة",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "166",
+    "text": "نرغب في استرجاع نسخة احتياطية من البيانات المخزنة على محرك القرص D: ونقلها إلى محرك قرص آخر. أي من الخيارات التالية من لوحة التحكم ويستخدم في تحقيق ذلك؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "النسخ الاحتياطي والاسترجاع",
+    "options": [
+      {
+        "text": "النسخ الاحتياطي والاسترجاع",
+        "is_correct": true
+      },
+      {
+        "text": "حسابات المستخدمين",
+        "is_correct": false
+      },
+      {
+        "text": "جدار الحماية",
+        "is_correct": false
+      },
+      {
+        "text": "الشبكة والنترنت",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "167",
+    "text": "أي من العبارات التالية هي عبارة صحيحة حول الحذف التقليدي للبيانات والمحو الآمن للبيانات؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "البيانات المحذوفة بطريقة تقليدية يمكن استرجاعها عند الحاجة أما البيانات التي تم محوها بأمان لا يمكن استرجاعها مرة أخرى.",
+    "options": [
+      {
+        "text": "البيانات المحذوفة بطريقة تقليدية يمكن استرجاعها عند الحاجة أما البيانات التي تم محوها بأمان لا يمكن استرجاعها مرة أخرى.",
+        "is_correct": true
+      },
+      {
+        "text": "البيانات المحذوفة بطريقة تقليدية لا يمكن استرجاعها مرة أخرى أما البيانات التي تم محوها بأمان فيمكن استرجاعها عند الحاجة.",
+        "is_correct": false
+      },
+      {
+        "text": "البيانات المحذوفة بطريقة تقليدية يتم إتلافها كليا أما البيانات التي تم محوها بأمان فيمكن استرجاعها عند الحاجة.",
+        "is_correct": false
+      },
+      {
+        "text": "البيانات المحذوفة بطريقة تقليدية تشغل مساحة تخزينية كبيرة أما التي تم محوها بأمان تشغل مساحة تخزينية قليلة.",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "168",
+    "text": "ترغب في التخلص من حاسبك الشخصي القديم وحذف الملفات السرية المخزنة عليه بشكل آمن ، أي مما يلي يعد سببا وجيها للقيام بذلك؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "لضمان أن يتم إتلاف الملفات تماما ولا يمكن استرجاعها مرة أخرى.",
+    "options": [
+      {
+        "text": "لضمان أن يتم الاحتفاظ بالملفات ذات الصلة فقط بجهاز الحاسب.",
+        "is_correct": false
+      },
+      {
+        "text": "لضمان أن يتم إتلاف الملفات تماما ولا يمكن استرجاعها مرة أخرى.",
+        "is_correct": true
+      },
+      {
+        "text": "لضمان أن يتم نقل الملفات القديمة إلى جهاز الحاسب الجديد.",
+        "is_correct": false
+      },
+      {
+        "text": "لضمان أن يتم استرجاع الملفات مرة أخرى في حال حدوث عطل بجهاز الحاسب.",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "169",
+    "text": "ما هي الميزة التي تساعد على حماية المعلومات الشخصية المخزنة في جهاز الهاتف المتحرك الخاص بك؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "كلمة مرور الجهاز",
+    "options": [
+      {
+        "text": "واقي الشاشة",
+        "is_correct": false
+      },
+      {
+        "text": "كلمة مرور الجهاز",
+        "is_correct": true
+      },
+      {
+        "text": "الوضع الصامت",
+        "is_correct": false
+      },
+      {
+        "text": "إشعارات",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "170",
+    "text": "ترغب في التأكد من أن المتجر الالكتروني الذي تقوم بزيارته حاليا هو متجر آمن للشراء عبر الانترنت، أي مما يلي يشير إلى أن هذا الموقع موثوق ويستخدم اتصال مشفر؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "مقدمة في الأمن السيبراني",
+    "correct_answer": "عنوان الموقع الالكتروني يبدأ بالبروتوكول ‘https’",
+    "options": [
+      {
+        "text": "عنوان الموقع الالكتروني يبدأ بالبروتوكول ‘https’",
+        "is_correct": true
+      },
+      {
+        "text": "عنوان الموقع الالكتروني يبدأ بالبروتوكول ‘http’",
+        "is_correct": false
+      },
+      {
+        "text": "عنوان الموقع الالكتروني ينتهي ب .com",
+        "is_correct": false
+      },
+      {
+        "text": "عنوان الموقع الالكتروني ينتهي ب ‘/secure.html’",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "171",
+    "text": "ما هي عملية إخفاء النص داخل صورة ؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إختبار الاختراق",
+    "correct_answer": "Steganography",
+    "options": [
+      {
+        "text": "Steganography",
+        "is_correct": true
+      },
+      {
+        "text": "Encryption",
+        "is_correct": false
+      },
+      {
+        "text": "Spyware",
+        "is_correct": false
+      },
+      {
+        "text": "Keystroke logging",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "172",
+    "text": "ما هي الفترة الزمنية الموصي بها لتغيير كلمة المرور؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "إختبار الاختراق",
+    "correct_answer": "30يوم",
+    "options": [
+      {
+        "text": "30يوم",
+        "is_correct": true
+      },
+      {
+        "text": "20يوم",
+        "is_correct": false
+      },
+      {
+        "text": "يوم واحد",
+        "is_correct": false
+      },
+      {
+        "text": "7أيام",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "173",
+    "text": "ما هو نوع هجوم كلمة المرور الذي غالبا يكون ناجحا ضد كلمة المرور T63k#s23A ؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "إختبار الاختراق",
+    "correct_answer": "Brute force",
+    "options": [
+      {
+        "text": "Dictionary",
+        "is_correct": false
+      },
+      {
+        "text": "Hybrid",
+        "is_correct": false
+      },
+      {
+        "text": "Password guessing",
+        "is_correct": false
+      },
+      {
+        "text": "Brute force",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "174",
+    "text": "أي من الخيارات التالية يعتبر   passive online attack ؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إختبار الاختراق",
+    "correct_answer": "Network sniffing",
+    "options": [
+      {
+        "text": "Password guessing",
+        "is_correct": false
+      },
+      {
+        "text": "Network sniffing",
+        "is_correct": true
+      },
+      {
+        "text": "Brute-force attack",
+        "is_correct": false
+      },
+      {
+        "text": "Dictionary attack",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "175",
+    "text": "أسهل طريقة للحصول على كلمة المرور هي:",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إختبار الاختراق",
+    "correct_answer": "Password guessing",
+    "options": [
+      {
+        "text": "Dictionary",
+        "is_correct": false
+      },
+      {
+        "text": "Hybrid",
+        "is_correct": false
+      },
+      {
+        "text": "Password guessing",
+        "is_correct": true
+      },
+      {
+        "text": "Brute force",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "176",
+    "text": "ما هو أول عمل يفعله المخترق بعد دخوله كمدير على النظام ؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إختبار الاختراق",
+    "correct_answer": "إخفاء التدقيق",
+    "options": [
+      {
+        "text": "إنشاء حساب مستخدم جديد",
+        "is_correct": false
+      },
+      {
+        "text": "تغيير كلمة مرور مدير النظام؟",
+        "is_correct": false
+      },
+      {
+        "text": "نسخ ملفات البيانات الهامة",
+        "is_correct": false
+      },
+      {
+        "text": "إخفاء التدقيق",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "177",
+    "text": "أفضل طريقة حماية لأي نوع من أنواع Sniffing:",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إختبار الاختراق",
+    "correct_answer": "التشفير",
+    "options": [
+      {
+        "text": "التشفير",
+        "is_correct": true
+      },
+      {
+        "text": "تركيب أجهزة سويتشات في الشبكة",
+        "is_correct": false
+      },
+      {
+        "text": "تأمين المنافذ",
+        "is_correct": false
+      },
+      {
+        "text": "برامج أمان جيدة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "178",
+    "text": "رقم الطبقة في نموذج OSI الذي يكون فيها وحدة البيانات حزم Frames:",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "إختبار الاختراق",
+    "correct_answer": "طبقة2",
+    "options": [
+      {
+        "text": "طبقة 1",
+        "is_correct": false
+      },
+      {
+        "text": "طبقة2",
+        "is_correct": true
+      },
+      {
+        "text": "طبقة3",
+        "is_correct": false
+      },
+      {
+        "text": "طبقة 4",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "179",
+    "text": "أين يوضع رأس header العنوان الفيزيائي Mac Address؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "إختبار الاختراق",
+    "correct_answer": "طبقة2",
+    "options": [
+      {
+        "text": "طبقة 1",
+        "is_correct": false
+      },
+      {
+        "text": "طبقة2",
+        "is_correct": true
+      },
+      {
+        "text": "طبقة3",
+        "is_correct": false
+      },
+      {
+        "text": "طبقة 4",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "180",
+    "text": "أين يوضع العنوان المنطقي IP Address ؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "إختبار الاختراق",
+    "correct_answer": "طبقة3",
+    "options": [
+      {
+        "text": "طبقة 1",
+        "is_correct": false
+      },
+      {
+        "text": "طبقة2",
+        "is_correct": false
+      },
+      {
+        "text": "طبقة3",
+        "is_correct": true
+      },
+      {
+        "text": "طبقة 4",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "181",
+    "text": "ما هو فلتر Wireshark الذي يقوم بالتقاط حركة المرور لموقع www.google.com",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إختبار الاختراق",
+    "correct_answer": "ip.dst eq www.google.com",
+    "options": [
+      {
+        "text": "ip.dst = www.google.com",
+        "is_correct": false
+      },
+      {
+        "text": "ip.dst eq www.google.com",
+        "is_correct": true
+      },
+      {
+        "text": "ip.dst == www.google.com",
+        "is_correct": false
+      },
+      {
+        "text": "http.dst == www.google.com",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "182",
+    "text": "كلمات المرور تتواجد في طبقة ...........",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "إختبار الاختراق",
+    "correct_answer": "التطبيقات",
+    "options": [
+      {
+        "text": "التطبيقات",
+        "is_correct": true
+      },
+      {
+        "text": "الفيزيائية",
+        "is_correct": false
+      },
+      {
+        "text": "ربط البيانات",
+        "is_correct": false
+      },
+      {
+        "text": "الشبكة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "183",
+    "text": "ما هي الطريقة التي تمنع هجوم DOS؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "إختبار الاختراق",
+    "correct_answer": "فلترة حركة المرور للبيانات",
+    "options": [
+      {
+        "text": "التوجيه اليدوي",
+        "is_correct": false
+      },
+      {
+        "text": "فلترة حركة المرور للبيانات",
+        "is_correct": true
+      },
+      {
+        "text": "قواعد جدار الحماية",
+        "is_correct": false
+      },
+      {
+        "text": "جدار الحماية الشخصي",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "184",
+    "text": "ما هو البرتوكول التي تستخدمه أداة Trinoo لكي تقوم بهجوم DOS؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إختبار الاختراق",
+    "correct_answer": "UDP",
+    "options": [
+      {
+        "text": "TCP",
+        "is_correct": false
+      },
+      {
+        "text": "IP",
+        "is_correct": false
+      },
+      {
+        "text": "UDP",
+        "is_correct": true
+      },
+      {
+        "text": "HTTP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "185",
+    "text": "ما هي المرحلة الأولى في هجوم  DDoS ؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "إختبار الاختراق",
+    "correct_answer": "التدخل Intrusion",
+    "options": [
+      {
+        "text": "التدخل Intrusion",
+        "is_correct": true
+      },
+      {
+        "text": "الهجوم",
+        "is_correct": false
+      },
+      {
+        "text": "DOS",
+        "is_correct": false
+      },
+      {
+        "text": "إيجاد جهاز الضحية",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "186",
+    "text": "اختر أداة من الأدوات التالية يمكن أن تنفذ الثمانية أنواع من DDOS؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إختبار الاختراق",
+    "correct_answer": "Targa",
+    "options": [
+      {
+        "text": "Ping of Death",
+        "is_correct": false
+      },
+      {
+        "text": "Trinoo",
+        "is_correct": false
+      },
+      {
+        "text": "Targa",
+        "is_correct": true
+      },
+      {
+        "text": "TFN2K",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "187",
+    "text": "ما هو الهدف من هجوم DOS؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "إختبار الاختراق",
+    "correct_answer": "لتعطيل نظام أو شبكة",
+    "options": [
+      {
+        "text": "لالتقاط ملفات من نظام بعيد",
+        "is_correct": false
+      },
+      {
+        "text": "لتعطيل نظام أو شبكة",
+        "is_correct": true
+      },
+      {
+        "text": "لاستغلال نقطة ضعف في TCP/IP",
+        "is_correct": false
+      },
+      {
+        "text": "لتنفيذ حصان طروادة باستخدام المشاركات المخفية",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "188",
+    "text": "أي من الخيارات التالية يمثل معلومات ضرورية للمخترق لكي ينفذ هجوم من نوع  a session-hijacking\nattack؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إختبار الاختراق",
+    "correct_answer": "Sequence number",
+    "options": [
+      {
+        "text": "Session ID",
+        "is_correct": false
+      },
+      {
+        "text": "Session number",
+        "is_correct": false
+      },
+      {
+        "text": "Sequence number",
+        "is_correct": true
+      },
+      {
+        "text": "Source IP address",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "189",
+    "text": "أي من الإجراءات التالية الأفضل كإجراء مضاد لهجوم session-hijacking؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إختبار الاختراق",
+    "correct_answer": "التشفير",
+    "options": [
+      {
+        "text": "Port filtering firewall",
+        "is_correct": false
+      },
+      {
+        "text": "التشفير",
+        "is_correct": true
+      },
+      {
+        "text": "Session monitoring",
+        "is_correct": false
+      },
+      {
+        "text": "كلمات المرور القوية",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "190",
+    "text": "بماذا يرمز ISN؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "إختبار الاختراق",
+    "correct_answer": "Initial sequence number",
+    "options": [
+      {
+        "text": "Initiation session number",
+        "is_correct": false
+      },
+      {
+        "text": "Initial sequence number",
+        "is_correct": true
+      },
+      {
+        "text": "Initial session number",
+        "is_correct": false
+      },
+      {
+        "text": "Indication sequence number",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "191",
+    "text": "أي من الخيارات التالية يعتبر إجراء مضاد لهجوم Buffer Overflow؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "إختبار الاختراق",
+    "correct_answer": "التحقق من حقل الادخال",
+    "options": [
+      {
+        "text": "التحقق من طول حقل الادخال",
+        "is_correct": false
+      },
+      {
+        "text": "التشفير",
+        "is_correct": false
+      },
+      {
+        "text": "جدار الحماية",
+        "is_correct": false
+      },
+      {
+        "text": "استخدام نماذج الويب",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "192",
+    "text": "تصنف لغة بابثون من لغات:",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "برمجة الحاسب",
+    "correct_answer": "لغلت المستوي العالي",
+    "options": [
+      {
+        "text": "لغات الالة",
+        "is_correct": false
+      },
+      {
+        "text": "لغات التجميع",
+        "is_correct": false
+      },
+      {
+        "text": "لغلت المستوي العالي",
+        "is_correct": true
+      },
+      {
+        "text": "لغات برمجة الهواتف",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "193",
+    "text": "يمكن ان تعمل لغة بايثون علي نظام التشغيل:",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "برمجة الحاسب",
+    "correct_answer": "متوافقة مع معظم أنظمة التشغيل",
+    "options": [
+      {
+        "text": "نظام الويندوز",
+        "is_correct": false
+      },
+      {
+        "text": "نظام اللينكس",
+        "is_correct": false
+      },
+      {
+        "text": "نظام الماك",
+        "is_correct": false
+      },
+      {
+        "text": "متوافقة مع معظم أنظمة التشغيل",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "194",
+    "text": "طريقه كتابة التعليقات في لغة البايثون :",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "#comment",
+    "options": [
+      {
+        "text": "#comment",
+        "is_correct": true
+      },
+      {
+        "text": "$comment",
+        "is_correct": false
+      },
+      {
+        "text": "&comment",
+        "is_correct": false
+      },
+      {
+        "text": "//comment",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "195",
+    "text": "ما هي الصيغة الصحيحة لتسمية المتغيرات في لغة البرمجة البايثون:",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "my_int",
+    "options": [
+      {
+        "text": "my_int",
+        "is_correct": true
+      },
+      {
+        "text": "$my_int",
+        "is_correct": false
+      },
+      {
+        "text": "4int",
+        "is_correct": false
+      },
+      {
+        "text": "my-it",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "196",
+    "text": "لغة بابثون من لغات التجميع.",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "برمجة الحاسب",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "197",
+    "text": "عند استحدام لغة البايثون هنالك قيمتان فقط لنوع البيانات المنطقية (Boolean) وهما true و false",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "برمجة الحاسب",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "198",
+    "text": "تعمل لغة البايثون على نظام التشغيل ويندوز فقط",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "برمجة الحاسب",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "199",
+    "text": "لتحويل الاعداد الصحيحة اعداد عشرية في لفة البايثون نستخدم الدالة:",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "برمجة الحاسب",
+    "correct_answer": "float()",
+    "options": [
+      {
+        "text": "float()",
+        "is_correct": true
+      },
+      {
+        "text": "int()",
+        "is_correct": false
+      },
+      {
+        "text": "str()",
+        "is_correct": false
+      },
+      {
+        "text": "tuple()",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "200",
+    "text": "باستخدام لغة البايثون ما هي الصيغة الصحيحة لتكرار السلسلة النصية sammy ثلاثة مرات?",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "برمجة الحاسب",
+    "correct_answer": "print(\"sammy\"*3)",
+    "options": [
+      {
+        "text": "print(\"sammy\",3)",
+        "is_correct": false
+      },
+      {
+        "text": "print(\"sammy\"*3)",
+        "is_correct": true
+      },
+      {
+        "text": "print(3,sammy)",
+        "is_correct": false
+      },
+      {
+        "text": "print(sammy,sammy,sammy)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "201",
+    "text": "لنزول لسطر جديد عند استخدام دالة print  بإستخدام لغة البايثون:",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "\\n",
+    "options": [
+      {
+        "text": "\\n",
+        "is_correct": true
+      },
+      {
+        "text": "\\t",
+        "is_correct": false
+      },
+      {
+        "text": "\\\"",
+        "is_correct": false
+      },
+      {
+        "text": "\\'",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "202",
+    "text": "عند استخدام لغة البايثون ماذا تعني العملية x%y؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "باقي قسمة x علي y",
+    "options": [
+      {
+        "text": "xمرفوع الأسy",
+        "is_correct": false
+      },
+      {
+        "text": "باقي قسمة x علي y",
+        "is_correct": true
+      },
+      {
+        "text": "قسمة x علي y",
+        "is_correct": false
+      },
+      {
+        "text": "حاصل القسمة التحتية لx علي y",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "203",
+    "text": "عند استخدام لغة البايثون  ماذا تعني العملية y+=1؟",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "برمجة الحاسب",
+    "correct_answer": "إضافة القيمة ثم اسنادها",
+    "options": [
+      {
+        "text": "إضافة القيمة ثم اسنادها",
+        "is_correct": true
+      },
+      {
+        "text": "إضافة القيمة فقط",
+        "is_correct": false
+      },
+      {
+        "text": "اسناد القيمة 1",
+        "is_correct": false
+      },
+      {
+        "text": "إعادة اسناد القيمة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "204",
+    "text": "عند استخدام لغة البايثون ما هي الدالة التي تعطي القيمة المطلقة؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "abs()",
+    "options": [
+      {
+        "text": "abs()",
+        "is_correct": true
+      },
+      {
+        "text": "pow()",
+        "is_correct": false
+      },
+      {
+        "text": "sum()",
+        "is_correct": false
+      },
+      {
+        "text": "round()",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "205",
+    "text": "عند استخدام لغة البايثون في البرمجة ماذا يعني العامل =!",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "لا يساوي",
+    "options": [
+      {
+        "text": "لا يساوي",
+        "is_correct": true
+      },
+      {
+        "text": "يساوي",
+        "is_correct": false
+      },
+      {
+        "text": "اصغر من",
+        "is_correct": false
+      },
+      {
+        "text": "اصغر من او يساوي",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "206",
+    "text": "عند استخدام لغة البايثون في البرمجة تسمح اللغة بدمج التعليمات الشرطية والمعاملات المنطقية and وor",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "207",
+    "text": "في لغة البرمجة البايثون الحلقة التكرارية while لا تحتاج الي تحديد عدد مرات التنفيذ عكس حلقة for",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "208",
+    "text": "عند استخدام لغة البايثون توفر لك التعليمة break القدرة علي الخروج من الحلقة التكرارية عند حدوث أخطاء",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "209",
+    "text": "في لغة البرمجة البايثون ماهي الدالة التي تستخدم لطباعة كائن في الطرفية؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "print()",
+    "options": [
+      {
+        "text": "print()",
+        "is_correct": true
+      },
+      {
+        "text": "input()",
+        "is_correct": false
+      },
+      {
+        "text": "int()",
+        "is_correct": false
+      },
+      {
+        "text": "len()",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "210",
+    "text": "عند استخدام لغة البايثون الطريقة الصحيحة لاستيراد وحدة توليد القيم العشوائية random هي",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "import random",
+    "options": [
+      {
+        "text": "preak random",
+        "is_correct": false
+      },
+      {
+        "text": "continue random",
+        "is_correct": false
+      },
+      {
+        "text": "import random",
+        "is_correct": true
+      },
+      {
+        "text": "int random",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "211",
+    "text": "ما ناتج الكود التالي؟                                 listOne = [20, 40, 60, 80]\nlistTwo = [20, 40, 60, 80]\nprint(\"first = \",listOne == listTwo)\nprint(\"second = \",listOne != listTwo)",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "first = True , second = False",
+    "options": [
+      {
+        "text": "first = True , second = False",
+        "is_correct": true
+      },
+      {
+        "text": "first = False , second = True",
+        "is_correct": false
+      },
+      {
+        "text": "first = True , second = True",
+        "is_correct": false
+      },
+      {
+        "text": "first = False , second = False",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "212",
+    "text": "ما ناتج الكود التالي؟                                var1 = 1\nvar2 = 2\nvar3 = \"3\"\nprint(var1 + var2 + var3)",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "خطأ error",
+    "options": [
+      {
+        "text": "123",
+        "is_correct": false
+      },
+      {
+        "text": "33",
+        "is_correct": false
+      },
+      {
+        "text": "6",
+        "is_correct": false
+      },
+      {
+        "text": "خطأ error",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "213",
+    "text": "يأخذ مترجم Python الشفرة التي تكتبها ويحولها إلى اللغة التي يفهمها جهاز الكمبيوتر.",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "برمجة الحاسب",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "214",
+    "text": "ما ناتج الكود التالي؟                                 p, p,q, r = 10, 20 ,30\nprint(p, q, r)",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "برمجة الحاسب",
+    "correct_answer": "10 20 30",
+    "options": [
+      {
+        "text": "10 30",
+        "is_correct": false
+      },
+      {
+        "text": "10 20",
+        "is_correct": false
+      },
+      {
+        "text": "10 20 30",
+        "is_correct": true
+      },
+      {
+        "text": "خطاء error",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "215",
+    "text": "يتم التحويل من السلسلة الحرفية الي رقم صحيح بإستخدام الدالة:",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "int()",
+    "options": [
+      {
+        "text": "input()",
+        "is_correct": false
+      },
+      {
+        "text": "int()",
+        "is_correct": true
+      },
+      {
+        "text": "str()",
+        "is_correct": false
+      },
+      {
+        "text": "لا يمكن تحويلها",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "216",
+    "text": "ما هو ناتج الكود                                                        print(\"new\"*2*3)",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "new new new new   new new",
+    "options": [
+      {
+        "text": "new new new new   new new",
+        "is_correct": true
+      },
+      {
+        "text": "new",
+        "is_correct": false
+      },
+      {
+        "text": "new new",
+        "is_correct": false
+      },
+      {
+        "text": "خطاء error",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "217",
+    "text": "ما هو ناتج الكود                                   str=\"pynative\"                                   print(str[1:3])",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "برمجة الحاسب",
+    "correct_answer": "yna",
+    "options": [
+      {
+        "text": "yna",
+        "is_correct": true
+      },
+      {
+        "text": "py",
+        "is_correct": false
+      },
+      {
+        "text": "yn",
+        "is_correct": false
+      },
+      {
+        "text": "tiv",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "218",
+    "text": "فيما يستخدم الكود البرمجي   variable=type(input(\"descripption\"))",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "تحديد نوع البيانات المدخلة",
+    "options": [
+      {
+        "text": "تحديد نوع البيانات المدخلة",
+        "is_correct": true
+      },
+      {
+        "text": "طباعة قيمة البيانات",
+        "is_correct": false
+      },
+      {
+        "text": "تحويل النص المدخل الي حروف صغيرة",
+        "is_correct": false
+      },
+      {
+        "text": "تحويل القيمة المدخلة الي اعداد صحيحة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "219",
+    "text": ".......هي عبارات دخيلة علي الكود البرمجي وليست جزأ منه وتتجاهلها المفسرات والمترجمات",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "برمجة الحاسب",
+    "correct_answer": "التعليقات",
+    "options": [
+      {
+        "text": "التعليقات",
+        "is_correct": true
+      },
+      {
+        "text": "المتغيرات",
+        "is_correct": false
+      },
+      {
+        "text": "الثوابت",
+        "is_correct": false
+      },
+      {
+        "text": "الدوال",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "220",
+    "text": "في الكود البرمجي التالي ما هو ناتج العملية       x=75                                                 x=\"samy\"                                          print(x)",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "برمجة الحاسب",
+    "correct_answer": "samy",
+    "options": [
+      {
+        "text": "خطاء error",
+        "is_correct": false
+      },
+      {
+        "text": "75",
+        "is_correct": false
+      },
+      {
+        "text": "samy",
+        "is_correct": true
+      },
+      {
+        "text": "75 samy",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "221",
+    "text": "ما هو ناتج الكود                                     x=\"global\"                                              def var_function():                                  y=\"local\"                                         print(y)                                     var_function()                              print(x)",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "برمجة الحاسب",
+    "correct_answer": "local               global",
+    "options": [
+      {
+        "text": "global",
+        "is_correct": false
+      },
+      {
+        "text": "local",
+        "is_correct": false
+      },
+      {
+        "text": "local               global",
+        "is_correct": true
+      },
+      {
+        "text": "global                local",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "222",
+    "text": "ما هو ناتج الكود                                 x=185.0                                        print(int(x))",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "185",
+    "options": [
+      {
+        "text": "185",
+        "is_correct": true
+      },
+      {
+        "text": "185",
+        "is_correct": true
+      },
+      {
+        "text": "x",
+        "is_correct": false
+      },
+      {
+        "text": "خطاء error",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "223",
+    "text": "............هي مجموعة من الخطوات والتعليمات الرياضية والمنطقية المتسلسلة التي تساعد في حل المشكلة",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "الخوارزميات",
+    "options": [
+      {
+        "text": "الخوارزميات",
+        "is_correct": true
+      },
+      {
+        "text": "المفسر",
+        "is_correct": false
+      },
+      {
+        "text": "المترجم",
+        "is_correct": false
+      },
+      {
+        "text": "المتغيرات",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "224",
+    "text": "........هو عبارة عن سلسلة من العمليات والاوامر التي يحددها المبرمج",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "برمجة الحاسب",
+    "correct_answer": "البرنامج",
+    "options": [
+      {
+        "text": "المتغيرات",
+        "is_correct": false
+      },
+      {
+        "text": "البرنامج",
+        "is_correct": true
+      },
+      {
+        "text": "الثوابت",
+        "is_correct": false
+      },
+      {
+        "text": "التعليقات",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "225",
+    "text": "يستخدم .............للتحويل الأوامر من لغات عالية المستوي الي لغة الالة",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "المفسر",
+    "options": [
+      {
+        "text": "المفسر",
+        "is_correct": true
+      },
+      {
+        "text": "المتغير",
+        "is_correct": false
+      },
+      {
+        "text": "الدالة",
+        "is_correct": false
+      },
+      {
+        "text": "الخوارزمية",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "226",
+    "text": "........عبارة عن تمثيل بياني لتدفق البيانات يعتمد علي رموز معروفه لتوضيح تسلسل خطوات حل المشكلة",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "خرائط التدفق",
+    "options": [
+      {
+        "text": "خرائط التدفق",
+        "is_correct": true
+      },
+      {
+        "text": "الخوارزميات",
+        "is_correct": false
+      },
+      {
+        "text": "المفسر",
+        "is_correct": false
+      },
+      {
+        "text": "المترجم",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "227",
+    "text": "المعيار الذي يتم في تنفيذ البرنامج وفق مجموعة أوامر متسلسلة",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "برمجة الحاسب",
+    "correct_answer": "التسلسل",
+    "options": [
+      {
+        "text": "التسلسل",
+        "is_correct": true
+      },
+      {
+        "text": "الاختيار",
+        "is_correct": false
+      },
+      {
+        "text": "التكرار",
+        "is_correct": false
+      },
+      {
+        "text": "التصفح",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "228",
+    "text": "مرحلة تقييم الضعف واختبار الاختراق هي اختبار عملي لنظام نقاط الضعف المحددة وغير المحددة",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "229",
+    "text": "الاختراق السيبراني هو وصول غير ناجح غير مصرح به إلى مورد نظام محمي",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "230",
+    "text": "PHP (Hypertext Preprocessor) هي لغة برمجة نصية عامة الاستخدام على نطاق واسع ومناسبة بشكل خاص لتطوير الويب",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "231",
+    "text": "النفق عبارة عن رابط اتصال غير آمن بين نقاط النهاية والشبكات مثل الإنترنت.",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "232",
+    "text": "المصادقة - تتضمن إنشاء مجال تشفير يتضمن مصادقة أجهزة الكمبيوتر وحزم البيانات عن طريق استخدام التشفير العام.",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "233",
+    "text": "شبكات PAN اللاسلكية أو شبكات WPAN هي شبكات صغيرة.",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "234",
+    "text": "إذا كان هناك العديد من التهديدات الأمنية التي تستهدف جميعها نفس المورد ، فسيؤدي كل تهديد إلى مخاطر مختلفة ، وسيحتاج كل منها إلى:",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "أمن الشبكات",
+    "correct_answer": "تقييم مختلف للمخاطر.",
+    "options": [
+      {
+        "text": "تقييم مختلف للمخاطر.",
+        "is_correct": true
+      },
+      {
+        "text": "نقييم احد المخاطر.",
+        "is_correct": false
+      },
+      {
+        "text": "لا تفعل شيئا لتقييم المخاطر.",
+        "is_correct": false
+      },
+      {
+        "text": "التخلص من الموارد",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "235",
+    "text": "في ارتباط التهديد الأمني ، تم الآن تقليل الوقت بين أول ظهور للتهديد وبدء الهجوم الحقيقي إلى:",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "أمن الشبكات",
+    "correct_answer": "حوال 20 دقيقة",
+    "options": [
+      {
+        "text": "حوال 40 دقيقة",
+        "is_correct": false
+      },
+      {
+        "text": "حوال 30 دقيقة",
+        "is_correct": false
+      },
+      {
+        "text": "حوال 20 دقيقة",
+        "is_correct": true
+      },
+      {
+        "text": "حوال 10 دقيقة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "236",
+    "text": "تعتبر من بين أكثر المصادر المذكورة بشكل متكرر لمشاكل الثغرات الأمنية في شبكات الكمبيوتر:",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "ضعف تكنولوجيا الإنترنت",
+    "options": [
+      {
+        "text": "هندسة اجتماعية",
+        "is_correct": false
+      },
+      {
+        "text": "ضعف تكنولوجيا الإنترنت",
+        "is_correct": true
+      },
+      {
+        "text": "إصلاح الأنظمة الضعيفة",
+        "is_correct": false
+      },
+      {
+        "text": "إدارة أمنية قوية",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "237",
+    "text": "تتكون الإدارة الأمنية الجيدة من عدد من:",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "أصول البرمجيات",
+    "options": [
+      {
+        "text": "أصول البرمجيات",
+        "is_correct": true
+      },
+      {
+        "text": "سياسات وإجراءات أمن المعلومات",
+        "is_correct": false
+      },
+      {
+        "text": "واجهات غير موثقة.",
+        "is_correct": false
+      },
+      {
+        "text": "أنماط التصميم",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "238",
+    "text": "تحليل المخاطر للموارد  يؤدي الي اكتشاف:",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "تهديدات تعرضهم للخطر",
+    "options": [
+      {
+        "text": "تهديدات تعرضهم للخطر",
+        "is_correct": true
+      },
+      {
+        "text": "تكنولوجيا الإنترنت",
+        "is_correct": false
+      },
+      {
+        "text": "إجراءات الإنشاء",
+        "is_correct": false
+      },
+      {
+        "text": "واجهات غير متوافقة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "239",
+    "text": "الثغرة الأمنية هي :",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "ضعف في النظام",
+    "options": [
+      {
+        "text": "ضعف في النظام",
+        "is_correct": true
+      },
+      {
+        "text": "قاعدة جيدة في النظام",
+        "is_correct": false
+      },
+      {
+        "text": "شيء قوي في النظام",
+        "is_correct": false
+      },
+      {
+        "text": "تدفقات التصميم",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "240",
+    "text": "لا يوجد نظام آمن ما لم يكن.........",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "نقاط الضعف معروفة",
+    "options": [
+      {
+        "text": "برامج التحكم",
+        "is_correct": false
+      },
+      {
+        "text": "نقاط الضعف غير معروفة",
+        "is_correct": false
+      },
+      {
+        "text": "نقاط الضعف معروفة",
+        "is_correct": true
+      },
+      {
+        "text": "البنية الأساسية للشبكة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "241",
+    "text": "الثغرات الأمنية الموجودة في ------------- هي أخطر نقاط الضعف في أنظمة الكمبيوتر",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "أمن الشبكات",
+    "correct_answer": "أنظمة التشغيل",
+    "options": [
+      {
+        "text": "لغات البرمجيات",
+        "is_correct": false
+      },
+      {
+        "text": "قاعدة البيانات",
+        "is_correct": false
+      },
+      {
+        "text": "شبكة الاتصال",
+        "is_correct": false
+      },
+      {
+        "text": "أنظمة التشغيل",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "242",
+    "text": "دائمًا ما يكون نظام الكمبيوتر الذي يعمل مع العديد من الموارد هدفًا للكثير من\nالتهديدات الأمنية. التهديد هو:",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "أ و ب",
+    "options": [
+      {
+        "text": "استغلال يمكن أن يستخدمه المتسلل للوصول إلى النظام",
+        "is_correct": false
+      },
+      {
+        "text": "الضعف في النظام",
+        "is_correct": false
+      },
+      {
+        "text": "تطور البرمجيات",
+        "is_correct": false
+      },
+      {
+        "text": "أ و ب",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "243",
+    "text": "الهندسة الاجتماعية تعني:",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "خداع الضحية من أجل المتعة والربح",
+    "options": [
+      {
+        "text": "خداع الضحية من أجل المتعة والربح",
+        "is_correct": true
+      },
+      {
+        "text": "عدم خداع الضحية من أجل المتعة والربح",
+        "is_correct": false
+      },
+      {
+        "text": "التلاعب في الشبكة",
+        "is_correct": false
+      },
+      {
+        "text": "التلاعب في البرنامج",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "244",
+    "text": "الفرق الرئيسي بين الدودة (worm)  و الفيروسات (viruses) هو",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "تختبئ الفيروسات دائمًا في البرامج كبديل ، فإن الديدان هي برامج قائمة بذاتها.",
+    "options": [
+      {
+        "text": "تختبئ الديدان دائمًا في البرامج كبديل ، إلا أن الفيروسات برامج قائمة بذاتها.",
+        "is_correct": false
+      },
+      {
+        "text": "تختبئ الفيروسات دائمًا في البرامج كبديل ، فإن الديدان هي برامج قائمة بذاتها.",
+        "is_correct": true
+      },
+      {
+        "text": "الفيروسات لا تختبئ في البرامج كبديل ، إلا أن الديدان هي برامج غير معروفة.",
+        "is_correct": false
+      },
+      {
+        "text": "لا يوجد اختلاف بينهما",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "245",
+    "text": "هناك عدة  انواع من الهاكرز (Hackers) تعتمد على فلسفات القرصنة مثل:",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "إرهابيو الإنترنت",
+    "options": [
+      {
+        "text": "إرهابيو الإنترنت",
+        "is_correct": true
+      },
+      {
+        "text": "الفيروسات",
+        "is_correct": false
+      },
+      {
+        "text": "أمن الشبكة",
+        "is_correct": false
+      },
+      {
+        "text": "الديدان (Worms)",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "246",
+    "text": "الهاكرز هم أشخاص :",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "لديهم معرفة كافية بالكمبيوتر لكنهم استخدموا هذه المعرفة بقصد إجرامي.",
+    "options": [
+      {
+        "text": "ليست لديهم معرفة كافية بالكمبيوتر لكنهم استخدمواالكمبيوتربقصد إجرامي.",
+        "is_correct": false
+      },
+      {
+        "text": "لديهم معرفة كافية بالكمبيوتر لكنهم استخدموا هذه المعرفة بقصد إجرامي.",
+        "is_correct": true
+      },
+      {
+        "text": "لديهم معرفة كافية بالكمبيوتر ويستخدموا هذه المعرفة بقصد مساعده الناس",
+        "is_correct": false
+      },
+      {
+        "text": "هم مبرمجين مواقع الكترونية وتطبيقات",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "247",
+    "text": "انتحال ال IP  هو:",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "تزوير عنوان حزمة IP",
+    "options": [
+      {
+        "text": "استقبال ip عبر الشبكة",
+        "is_correct": false
+      },
+      {
+        "text": "ارسال ip  عبر الشبكة",
+        "is_correct": false
+      },
+      {
+        "text": "عدم  تزوير",
+        "is_correct": false
+      },
+      {
+        "text": "تزوير عنوان حزمة IP",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "248",
+    "text": "تجاوز سعة المخزن المؤقت (Buffer overflow ) هو:",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "هجوم يغمر فيه المهاجم حقلًا تم اختياره بعناية مثل العنوان",
+    "options": [
+      {
+        "text": "هجوم يغمر فيه المهاجم حقلًا تم اختياره بعناية مثل العنوان",
+        "is_correct": true
+      },
+      {
+        "text": "هجوم لا يغمر فيه المهاجم حقلًا تم اختياره بعناية مثل العنوان",
+        "is_correct": false
+      },
+      {
+        "text": "هو علي برامج الكمبيوتر",
+        "is_correct": false
+      },
+      {
+        "text": "هو علي تطبيقات  الكمبيوتر",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "249",
+    "text": "يمكن أن تكون هجمات DDoS",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "هجمات علي الشبكه المحلية ( LAN ) او العالمية",
+    "options": [
+      {
+        "text": "هجمات علي الشبكه المحلية ( LAN ) او العالمية",
+        "is_correct": true
+      },
+      {
+        "text": "هجمات علي الشبكه الخاصة فقط",
+        "is_correct": false
+      },
+      {
+        "text": "هجمات علي البرامج",
+        "is_correct": false
+      },
+      {
+        "text": "هجمات علي أنظمة التشغيل",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "250",
+    "text": "فحص الثغرات الهدف من هذا النوع من المسح هو:",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "لاكتشاف نقاط الضعف والفجوات الحرجة في  أمان النظام.",
+    "options": [
+      {
+        "text": "لاكتشاف نقاط الضعف والفجوات الحرجة في  أمان النظام.",
+        "is_correct": true
+      },
+      {
+        "text": "فحص الثغرات الهدف لايكشف نقاط الضعف والفجوات الحرجة في  أمان النظام.",
+        "is_correct": false
+      },
+      {
+        "text": "يجعل النظام عرضة للهجوم من قبل الهاكرز",
+        "is_correct": false
+      },
+      {
+        "text": "مضيعة للوقت",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "251",
+    "text": "التشفير يتم على جزء من البيانات من الحزمة تمامًا كما هو الحال في SSL",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "252",
+    "text": "VPN هي شبكة بيانات خاصة تستخدم البنية التحتية للاتصالات العامة ، مثل الإنترنت ، من خلال إضافة إجراءات الأمان عبر قنوات الاتصال غير الآمنة",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "253",
+    "text": "تعتبر نقاط الضعف في البنية التحتية للشبكة وبروتوكولات الاتصال بمثابة حماية أمنية",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "254",
+    "text": "تقييم الثغرات هو عملية تعمل على نظام لتحديد وتتبع وإدارة إصلاح الثغرات الأمنية على النظام.",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "255",
+    "text": "مرحلة تقييم الضعف واختبار الاختراق هي اختبار ورقي لنظام نقاط الضعف المحددة وغير المحددة",
+    "type": "صح وخطأ",
+    "difficulty": "صعب",
+    "course": "أمن الشبكات",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "256",
+    "text": "يمكن استخدام تقنية الترميز من قبل مستخدمي النظام بغرض ............",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "أمن الشبكات",
+    "correct_answer": "من قبل مستخدمي النظام لإخفاء البيانات الحيوية أو الضارة",
+    "options": [
+      {
+        "text": "للتجسس علي الشركة",
+        "is_correct": false
+      },
+      {
+        "text": "لنشر البيانات علي الانترت",
+        "is_correct": false
+      },
+      {
+        "text": "لإخفاء البيانات الحيوية أو الضارة",
+        "is_correct": false
+      },
+      {
+        "text": "لاظهار البيانات الحيوية أو الضارة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "257",
+    "text": "تعتبر نقاط الضعف في البنية التحتية للشبكة وبروتوكولات الاتصال بمثابة تهديدات أمنية",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "258",
+    "text": "برنامج Hypervisor ، كمدير جهاز افتراضي ، هو برنامج يسمح لأنظمة تشغيل متعددة بمشاركة:",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "أمن الشبكات",
+    "correct_answer": "مضيف أجهزة مادي واحد.",
+    "options": [
+      {
+        "text": "مضيف أجهزة مادي واحد",
+        "is_correct": false
+      },
+      {
+        "text": "مضيف أجهزة مادي اكثر من واحد",
+        "is_correct": false
+      },
+      {
+        "text": "مضيف أجهزة غير مادي",
+        "is_correct": false
+      },
+      {
+        "text": "مضيف أجهزة لايسمح بمشاركه الملفات",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "259",
+    "text": "المحاكاة هي عملية إنشاء........",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "نسخة طبق الأصل من جميع وظائف الكيان",
+    "options": [
+      {
+        "text": "نسخة ليست طبق الأصل من جميع وظائف الكيان",
+        "is_correct": false
+      },
+      {
+        "text": "نسخة طبق الأصل من جميع وظائف الكيان",
+        "is_correct": true
+      },
+      {
+        "text": "نسخ من انظمة البرمجة",
+        "is_correct": false
+      },
+      {
+        "text": "نسخ من الاعداد الثنائية والعشرية",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "260",
+    "text": "المحاكاة الافتراضية للشبكة مثل المحاكاة الافتراضية للتخزين :",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "تجمع المحاكاة الافتراضية للشبكة الموارد من شبكات مختلفه في شبكة واحده",
+    "options": [
+      {
+        "text": "تجمع المحاكاة الافتراضية للشبكة الموارد من شبكات مختلفه في شبكة واحده",
+        "is_correct": true
+      },
+      {
+        "text": "لا تجمع المحاكاة الافتراضية للشبكة الموارد من شبكات مختلفه في شبكة واحده",
+        "is_correct": false
+      },
+      {
+        "text": "تجمع المحاكاة الافتراضية للشبكة الموارد من شبكات مختلفه في عده شبكات",
+        "is_correct": false
+      },
+      {
+        "text": "المحاكه الافتراضيه للشبكه تعزل الموارد",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "261",
+    "text": "بروتوكول الاتصال الرئيسيان على كل خادم في الشبكة :",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "UDP و TCP",
+    "options": [
+      {
+        "text": "UDP و TCP",
+        "is_correct": true
+      },
+      {
+        "text": "LANS و  WANS",
+        "is_correct": false
+      },
+      {
+        "text": "ICMP و   IPSEC",
+        "is_correct": false
+      },
+      {
+        "text": "SSH و   SSL",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "262",
+    "text": "القاعدة الأساسية لبروتوكول الاتصال الآمن في الخادم هي ..................",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "عدم ترك أي منفذ مفتوحًا",
+    "options": [
+      {
+        "text": "استخدام بروتوكول SSH",
+        "is_correct": false
+      },
+      {
+        "text": "اغلاق المنافذ حتي في حالة طلب خدمة",
+        "is_correct": false
+      },
+      {
+        "text": "عدم ترك أي منفذ مفتوحًا",
+        "is_correct": true
+      },
+      {
+        "text": "ترك كل المنافذ مفتوحة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "263",
+    "text": "نقاط ضعف البنية التحتية غالبا ما يستخدمها الهاكرز في ................",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "لاختراق الأنظمة وتدميرها",
+    "options": [
+      {
+        "text": "لتقويه الانظمه",
+        "is_correct": false
+      },
+      {
+        "text": "لاختراق الأنظمة وتدميرها",
+        "is_correct": true
+      },
+      {
+        "text": "لتقويه شبكه الشركه وتحزيرها",
+        "is_correct": false
+      },
+      {
+        "text": "لتصليح الاخطاء بالانظمة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "264",
+    "text": "يمكن أن يسمح نظام التشغيل الضعيف للمهاجم :",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "بالسيطرة على نظام الكمبيوتر والقيام بأي شيء",
+    "options": [
+      {
+        "text": "بالسيطرة على نظام الكمبيوتر والقيام بأي شيء",
+        "is_correct": true
+      },
+      {
+        "text": "بعدم السيطرة على نظام الكمبيوتر",
+        "is_correct": false
+      },
+      {
+        "text": "بحماية النظام علي الكمبيوتر وعدم القيام باي شي",
+        "is_correct": false
+      },
+      {
+        "text": "بحماية البرامج والملفات الخاصة بنظام التشغيل",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "265",
+    "text": "هناك العديد من أنواع المحاكاة الافتراضية بما في ذلك النظام الأساسي مثل:",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "الشبكة الافتراضية",
+    "options": [
+      {
+        "text": "الكاميرات الافتراضية",
+        "is_correct": false
+      },
+      {
+        "text": "الشبكة الافتراضية",
+        "is_correct": true
+      },
+      {
+        "text": "الدخول الافتراضي",
+        "is_correct": false
+      },
+      {
+        "text": "القرصنه",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "266",
+    "text": "قرصنة الهاتف هذه تقنية تستخدم لاعتراض:",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "المكالمات الهاتفية أو رسائل البريد الصوتي",
+    "options": [
+      {
+        "text": "المكالمات الهاتفية أو رسائل البريد الصوتي",
+        "is_correct": true
+      },
+      {
+        "text": "الاتصال بشبكات الانترنت",
+        "is_correct": false
+      },
+      {
+        "text": "الدخول لمواقع التواصل الاجتماعي",
+        "is_correct": false
+      },
+      {
+        "text": "الدخول علي ملفات الهاتف مثل الصور والفيديوهات",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "267",
+    "text": "هي برامج تستهدف عن عمد الهواتف المحمولة أو أجهزة المساعد الرقمي الشخصي التي تدعم الاتصال اللاسلكي:",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "البرامج الضارة / الفيروسات للأجهزة المحمولة",
+    "options": [
+      {
+        "text": "برامج vbn للاتصال",
+        "is_correct": false
+      },
+      {
+        "text": "برامج التصميم والجرافيك",
+        "is_correct": false
+      },
+      {
+        "text": "البرامج الضارة / الفيروسات للأجهزة المحمولة",
+        "is_correct": true
+      },
+      {
+        "text": "برامج قرصنه تنزل علي الهاتف المحمول",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "268",
+    "text": "هي نوع من البرامج الضارة التي تقوم بتثبيت نفسها تلقائيًا:",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "برامج التجسس",
+    "options": [
+      {
+        "text": "برامج  حماية الشبكه",
+        "is_correct": false
+      },
+      {
+        "text": "برامج تدعم الاتصال بالانترنت",
+        "is_correct": false
+      },
+      {
+        "text": "هي برامج تخول وصول الهاتف لنظام التشغيل المدمج",
+        "is_correct": false
+      },
+      {
+        "text": "برامج التجسس",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "269",
+    "text": "تعد                    الآن ميزة أساسية للهاتف المحمول",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "تقنية Bluetooth",
+    "options": [
+      {
+        "text": "تقنية Bluetooth",
+        "is_correct": true
+      },
+      {
+        "text": "مواقع التسوق",
+        "is_correct": false
+      },
+      {
+        "text": "مواقع التواصل الاجتماعي",
+        "is_correct": false
+      },
+      {
+        "text": "انظمه الحماية الفائقه",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "270",
+    "text": "يهدف               الي حماية البيانات مثل كلمة مرور التشغيل وكلمة مرور شاشة التوقف.",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "تشفير الجهاز المحمول",
+    "options": [
+      {
+        "text": "عدم تشفير الجهاز المحمزل",
+        "is_correct": false
+      },
+      {
+        "text": "تشفير الجهاز المحمول",
+        "is_correct": true
+      },
+      {
+        "text": "برنامج كاسر الشبكة مثل vbn",
+        "is_correct": false
+      },
+      {
+        "text": "برامج الدعم الفني المقدمة من شركات الجهاز المحمول",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "271",
+    "text": "هناك طريقتان مختلفتان يمكن من خلالهما تشفير الجهاز المحمول ، وهما :",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "تشفير التطبيقات والأجهزة.",
+    "options": [
+      {
+        "text": "تشفير التطبيقات والأجهزة.",
+        "is_correct": true
+      },
+      {
+        "text": "عدم تشفير التطبيقات والأجهزة.",
+        "is_correct": false
+      },
+      {
+        "text": "تشفير VPN و VMS",
+        "is_correct": false
+      },
+      {
+        "text": "SSH و   SSL",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "272",
+    "text": "لضمان عدم سرقة المعلومات سواء ماديًا أو إلكترونيًا.",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "تشفير البيانات على الجهاز",
+    "options": [
+      {
+        "text": "تشفير شكبه الاتصال بالانترنت علي الجهاز",
+        "is_correct": false
+      },
+      {
+        "text": "تشفير التطبيقات والمواقع علي الجهاز",
+        "is_correct": false
+      },
+      {
+        "text": "فك تشفير البيانات على الجهاز",
+        "is_correct": false
+      },
+      {
+        "text": "تشفير البيانات على الجهاز",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "273",
+    "text": "تسمح بوسائل مرنة لضمان اتصالات آمنة لأي حركة مرور بيانات لاسلكية.",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "شبكة افتراضية خاصة  (VPN   )",
+    "options": [
+      {
+        "text": "TCPو  UDP",
+        "is_correct": false
+      },
+      {
+        "text": "شبكة افتراضية خاصة  (VPN   )",
+        "is_correct": true
+      },
+      {
+        "text": "شبكات التصال المحلية وشبكات الاتصال العالمية",
+        "is_correct": false
+      },
+      {
+        "text": "تطبيقاتا الرسائل النصية",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "274",
+    "text": "برنامج مضاد فيروسات لحماية الجهاز من..............",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "أمن الشبكات",
+    "correct_answer": "من الفيروسات والبرامج الضارة",
+    "options": [
+      {
+        "text": "من الوصل للصور والفيدوهات علي الهاتف",
+        "is_correct": false
+      },
+      {
+        "text": "من الوصول للملفات من قبل اشخاص اخرين",
+        "is_correct": false
+      },
+      {
+        "text": "من الفيروسات والبرامج الضارة",
+        "is_correct": true
+      },
+      {
+        "text": "من التطبيقات والبرامج غير الضارة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "275",
+    "text": "يتم توصيل كل جهاز رقمي بالمنزل بنقطة دخول معينة إلى جهاز التوجيه تسمى...........",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "المنفذ",
+    "options": [
+      {
+        "text": "المنفذ",
+        "is_correct": true
+      },
+      {
+        "text": "عنوان الشبكه IP",
+        "is_correct": false
+      },
+      {
+        "text": "برنامج محاكاة",
+        "is_correct": false
+      },
+      {
+        "text": "شبكه افتراضية خاصة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "276",
+    "text": "المنافذ الداخلية التي تربط جميع الاجهزة في المنزل تستخدم تقنية............",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "أمن الشبكات",
+    "correct_answer": "LAN",
+    "options": [
+      {
+        "text": "LAN",
+        "is_correct": true
+      },
+      {
+        "text": "WAN",
+        "is_correct": false
+      },
+      {
+        "text": "TCP",
+        "is_correct": false
+      },
+      {
+        "text": "UDP",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "277",
+    "text": "توجد عدة أنواع من الشبكات اللاسلكية التي تستخدم في المنازل مثل :",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "أمن الشبكات",
+    "correct_answer": "شبكات المنطقة المحلية اللاسلكية (WLAN (WI-FI))",
+    "options": [
+      {
+        "text": "شبكات المنطقة السلكية مثل اسلاك شركات الهاتف",
+        "is_correct": false
+      },
+      {
+        "text": "شبكات المنطقة التي تستخدم عن طريق برامج المحاكة VMs",
+        "is_correct": false
+      },
+      {
+        "text": "شبكات المنطقة الافتراضية",
+        "is_correct": false
+      },
+      {
+        "text": "شبكات المنطقة المحلية اللاسلكية (WLAN (WI-FI))",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "278",
+    "text": "أمن المعلومات هو حماية أصول المعلومات  من المخاطر من خلال تطبيق سياسة أمن المعلومات .",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "279",
+    "text": "الخصائص الهامة لامن المعلومات ، السرية والنزاهة والتوافر",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "280",
+    "text": "نظم المعلومات تتكون من خمسة مكونات رئيسية: الأجهزة والبرمجيات والبيانات ،\nالاشخاص.",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "281",
+    "text": "كثير من الاحيان يساعد المسخدمين دخول الفايروس بفتح بريد الكتروني مصاب",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "282",
+    "text": "الفعل مقصود أو غير مقصود الذي يمكن أن يسبب تلف وسط معلومات أو الأنظمة هو ........",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "الهجوم",
+    "options": [
+      {
+        "text": "البرمجيات",
+        "is_correct": false
+      },
+      {
+        "text": "الهجوم",
+        "is_correct": true
+      },
+      {
+        "text": "الأجهزة",
+        "is_correct": false
+      },
+      {
+        "text": "الامن",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "283",
+    "text": "الحاجة إلى أمن الكمبيوتر تعني  الحاجة إلى تأمين المواقع المادية والأجهزة والبرامج من التهديدات.",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "284",
+    "text": "المرحله الاولي من مراحل  SDLC التقليدي هي التحليل.",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "285",
+    "text": "يتم استخدام المعلومات المكتسبة من مرحلة التحقيق للبدء في مرحلة التصميم",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "286",
+    "text": "تعد الملفات المرفقة بالبريد الإلكتروني من أكثر طرق نقل الفيروسات شيوعًا",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "287",
+    "text": "تحدث هجمات البرامج المتعمدة عندما يقوم فرد أو مجموعة بتصميم ونشر البرامج لمهاجمة النظام.",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "العبارة صحيحة",
+    "options": []
+  },
+  {
+    "id": "288",
+    "text": "أحصنة طروادة هي برامج تكشف طبيعتها الحقيقية وتكشف سلوكها المصممه من اجله",
+    "type": "صح وخطأ",
+    "difficulty": "سهل",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "289",
+    "text": "الباب الخلفي هو ثغره تسمح لمدير النظام بالدخول للبرنامج",
+    "type": "صح وخطأ",
+    "difficulty": "متوسط",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "العبارة خاطئة",
+    "options": []
+  },
+  {
+    "id": "290",
+    "text": "دورة حياة تطوير النظم SDLC هي منهجية ل.....................",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "تصمييم وتنفيذ نظام المعلومات",
+    "options": [
+      {
+        "text": "تصمييم وتنفيذ نظام المعلومات",
+        "is_correct": true
+      },
+      {
+        "text": "هيكلة واختبار نظام المعلومات",
+        "is_correct": false
+      },
+      {
+        "text": "صيانة نظام المعلومات",
+        "is_correct": false
+      },
+      {
+        "text": "تامين تظام المعلومات",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "291",
+    "text": "تبدأ مرحلة التحليل بالمعلومات المكتسبة خلال مرحلة:",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "التحقيق",
+    "options": [
+      {
+        "text": "التصميم",
+        "is_correct": false
+      },
+      {
+        "text": "الصيانه",
+        "is_correct": false
+      },
+      {
+        "text": "التنفيذ",
+        "is_correct": false
+      },
+      {
+        "text": "التحقيق",
+        "is_correct": true
+      }
+    ]
+  },
+  {
+    "id": "292",
+    "text": "من هم الأنواع الثلاثة الذين تقع عليهم مسؤليات ملكية وحماية البيانات؟",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "اصحاب البيانات - أمناء البيانات – مستخدم البيانات",
+    "options": [
+      {
+        "text": "اصحاب البيانات - أمناء البيانات – مستخدم البيانات",
+        "is_correct": true
+      },
+      {
+        "text": "مجمع البيانات – معالج البيانات – مخزن البيانات",
+        "is_correct": false
+      },
+      {
+        "text": "مبرمج البيانات – محلل البيانات-عالم البيانات",
+        "is_correct": false
+      },
+      {
+        "text": "مشفر البيانات-خزارزمية البيانات-ماسح البيانات",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "293",
+    "text": "تم تصميم البارمج الضارة بغرض:",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "اتلاف الانظمة المستهدفة",
+    "options": [
+      {
+        "text": "صيانه الانظمة المستهدفه",
+        "is_correct": false
+      },
+      {
+        "text": "حماية الانظمة المستهدفة",
+        "is_correct": false
+      },
+      {
+        "text": "اتلاف الانظمة المستهدفة",
+        "is_correct": true
+      },
+      {
+        "text": "تصميم الانظمة المستهدفة",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "294",
+    "text": "الدوده هي برنامج ضار يقوم ب...........",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "تكرار نفسه باستمرار",
+    "options": [
+      {
+        "text": "تكرار نفسه مره واحده",
+        "is_correct": false
+      },
+      {
+        "text": "تكرار نفسه مرتين",
+        "is_correct": false
+      },
+      {
+        "text": "تكرار نفسه باستمرار",
+        "is_correct": true
+      },
+      {
+        "text": "تكرار اوامر المستخدم",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "295",
+    "text": "يعتبر واحد من مجالات نموذج الصيانه الموصي به:",
+    "type": "اختيار متعدد",
+    "difficulty": "صعب",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "المراقبه الخارجة",
+    "options": [
+      {
+        "text": "المراقبه الخارجة",
+        "is_correct": true
+      },
+      {
+        "text": "المراقبه الثابته",
+        "is_correct": false
+      },
+      {
+        "text": "المراقبه المستمره",
+        "is_correct": false
+      },
+      {
+        "text": "المراقبه المتقطعه",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "296",
+    "text": "شبكة بيانات خاصة تستخدم البنية التحتية للاتصالات العامة ، وتحافظ على الخصوصية من خلال استخدام بروتوكول الأنفاق والأمن:",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "VPN",
+    "options": [
+      {
+        "text": "VPN",
+        "is_correct": true
+      },
+      {
+        "text": "IDPS",
+        "is_correct": false
+      },
+      {
+        "text": "VLAN",
+        "is_correct": false
+      },
+      {
+        "text": "wifi",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "297",
+    "text": "علي ماذا يطلق مصطلح ISP؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "مقدمو الخدمة",
+    "options": [
+      {
+        "text": "مقدمو الخدمة",
+        "is_correct": true
+      },
+      {
+        "text": "المخترقين",
+        "is_correct": false
+      },
+      {
+        "text": "مهندسين امن المعلومات",
+        "is_correct": false
+      },
+      {
+        "text": "أمناء امن المعلومات",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "298",
+    "text": "ما هي الطريقة التي تحدد بها الأنظمة ما إذا كان سيتم قبول المستخدم وكيفية ذلك؟",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "التحكم في الوصول",
+    "options": [
+      {
+        "text": "التحكم في الوصول",
+        "is_correct": true
+      },
+      {
+        "text": "التكاملية",
+        "is_correct": false
+      },
+      {
+        "text": "إعادة تعين كلمة المرور",
+        "is_correct": false
+      },
+      {
+        "text": "سرية البيانات",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "299",
+    "text": "يمنع أنواعًا معينة من المعلومات من الانتقال بين الشبكة الخارجية  الشبكة غير الموثوق بها ( الإنترنت) والشبكة الداخلية\n( الشبكة الموثوقة):",
+    "type": "اختيار متعدد",
+    "difficulty": "سهل",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "جدار الحماية",
+    "options": [
+      {
+        "text": "جدار الحماية",
+        "is_correct": true
+      },
+      {
+        "text": "VPN",
+        "is_correct": false
+      },
+      {
+        "text": "المصادقة",
+        "is_correct": false
+      },
+      {
+        "text": "التحكم في الوصول",
+        "is_correct": false
+      }
+    ]
+  },
+  {
+    "id": "300",
+    "text": "…………….يقوم بتشفير الكل\nحركة المرور التي ستجتاز شبكة غير آمنة.",
+    "type": "اختيار متعدد",
+    "difficulty": "متوسط",
+    "course": "إدارة أمن المعلومات",
+    "correct_answer": "Tunnel",
+    "options": [
+      {
+        "text": "Tunnel",
+        "is_correct": true
+      },
+      {
+        "text": "firewall",
+        "is_correct": false
+      },
+      {
+        "text": "wan",
+        "is_correct": false
+      },
+      {
+        "text": "stp",
+        "is_correct": false
+      }
+    ]
+  }
+,
+  {
+  "id": "301",
+  "text": "أي بروتوكول يعتبر غير آمن لنقل البيانات بسبب عدم التشفير؟",
+  "type": "اختيار متعدد",
+  "difficulty": "سهل",
+  "course": "أمن الشبكات",
+  "correct_answer": "HTTP",
+  "options": [
+    {
+      "text": "HTTP",
+      "is_correct": true
+    },
+    {
+      "text": "HTTPS",
+      "is_correct": false
+    },
+    {
+      "text": "SSH",
+      "is_correct": false
+    },
+    {
+      "text": "SFTP",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "302",
+  "text": "ما هو إنترنت الأشياء (IoT)؟",
+  "type": "اختيار متعدد",
+  "difficulty": "سهل",
+  "course": "أمن انترنت الأشياء",
+  "correct_answer": "نظام يربط جميع أنواع الأجهزة بالإنترنت",
+  "options": [
+    {
+      "text": "إدارة شبكات الحاسب",
+      "is_correct": false
+    },
+    {
+      "text": "منصة للتسوق الإلكتروني",
+      "is_correct": false
+    },
+    {
+      "text": "نظام يربط جميع أنواع الأجهزة بالإنترنت",
+      "is_correct": true
+    },
+    {
+      "text": "تقنية تسمح بتعقب الأجهزة",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "303",
+  "text": "من وحدات الإدخال:",
+  "type": "اختيار متعدد",
+  "difficulty": "سهل",
+  "course": "برمجة الحاسب",
+  "correct_answer": "لوحة المفاتيح",
+  "options": [
+    {
+      "text": "لوحة المفاتيح",
+      "is_correct": true
+    },
+    {
+      "text": "الطابعة",
+      "is_correct": false
+    },
+    {
+      "text": "الشاشة",
+      "is_correct": false
+    },
+    {
+      "text": "السماعات",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "304",
+  "text": "حدد نوع الـ Class للـ IP التالي: 166.1.1.1",
+  "type": "اختيار متعدد",
+  "difficulty": "متوسط",
+  "course": "أمن الشبكات",
+  "correct_answer": "Class B",
+  "options": [
+    {
+      "text": "Class A",
+      "is_correct": false
+    },
+    {
+      "text": "Class B",
+      "is_correct": true
+    },
+    {
+      "text": "Class C",
+      "is_correct": false
+    },
+    {
+      "text": "Class D",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "305",
+  "text": "ما هو البروتوكول المسؤول عن توزيع الآيبيات داخل الشبكة بشكل تلقائي؟",
+  "type": "اختيار متعدد",
+  "difficulty": "سهل",
+  "course": "أمن الشبكات",
+  "correct_answer": "DHCP",
+  "options": [
+    {
+      "text": "DNS",
+      "is_correct": false
+    },
+    {
+      "text": "HTTP",
+      "is_correct": false
+    },
+    {
+      "text": "DHCP",
+      "is_correct": true
+    },
+    {
+      "text": "UDP",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "306",
+  "text": "في شبكة الحرم الجامعي، من أهم الأجهزة المستخدمة في حماية الشبكة من الخارج إلى داخل الحرم:",
+  "type": "اختيار متعدد",
+  "difficulty": "متوسط",
+  "course": "أمن الشبكات",
+  "correct_answer": "الجدار الناري (Firewall)",
+  "options": [
+    {
+      "text": "الجدار الناري (Firewall)",
+      "is_correct": true
+    },
+    {
+      "text": "المبدل (Switch)",
+      "is_correct": false
+    },
+    {
+      "text": "الموجه (Router)",
+      "is_correct": false
+    },
+    {
+      "text": "نقطة الوصول (Access Point)",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "307",
+  "text": "عند تشفير A باستخدام شفرة قيصر بإزاحة 3، فإنه يستبدل بحرف:",
+  "type": "اختيار متعدد",
+  "difficulty": "متوسط",
+  "course": "التشفير التطبيقي",
+  "correct_answer": "D",
+  "options": [
+    {
+      "text": "B",
+      "is_correct": false
+    },
+    {
+      "text": "C",
+      "is_correct": false
+    },
+    {
+      "text": "D",
+      "is_correct": true
+    },
+    {
+      "text": "E",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "308",
+  "text": "ما هو البروتوكول المستخدم لإحضار صفحة الموقع من السيرفر الخاص بالموقع؟",
+  "type": "اختيار متعدد",
+  "difficulty": "سهل",
+  "course": "أمن الشبكات",
+  "correct_answer": "HTTP/HTTPS",
+  "options": [
+    {
+      "text": "HTTP/HTTPS",
+      "is_correct": true
+    },
+    {
+      "text": "FTP",
+      "is_correct": false
+    },
+    {
+      "text": "SMTP",
+      "is_correct": false
+    },
+    {
+      "text": "POP3",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "309",
+  "text": "ماذا يقصد بمصطلح Asset في الأمن السيبراني؟",
+  "type": "اختيار متعدد",
+  "difficulty": "سهل",
+  "course": "إدارة أمن المعلومات",
+  "correct_answer": "المعلومات المهمة لشخص أو جهة",
+  "options": [
+    {
+      "text": "البرامج",
+      "is_correct": false
+    },
+    {
+      "text": "المعلومات المهمة لشخص أو جهة",
+      "is_correct": true
+    },
+    {
+      "text": "التطبيقات مفتوحة المصدر",
+      "is_correct": false
+    },
+    {
+      "text": "الجدار الناري",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "310",
+  "text": "يكون المهاجم في وسط عملية الإرسال والاستقبال لطرفين حتى يتمكن من قراءة وتعديل البيانات المرسلة. هذا النوع من الهجمات يسمى:",
+  "type": "اختيار متعدد",
+  "difficulty": "متوسط",
+  "course": "أمن الشبكات",
+  "correct_answer": "هجوم الرجل في الوسط (MITM)",
+  "options": [
+    {
+      "text": "هجوم الرجل في الوسط (MITM)",
+      "is_correct": true
+    },
+    {
+      "text": "هجوم الحرمان من الخدمة (DoS)",
+      "is_correct": false
+    },
+    {
+      "text": "هجوم التصيد (Phishing)",
+      "is_correct": false
+    },
+    {
+      "text": "هجوم القوة الغاشمة (Brute Force)",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "311",
+  "text": "ما هي وظيفة الأمر MAN؟",
+  "type": "اختيار متعدد",
+  "difficulty": "سهل",
+  "course": "مقدمة في الأمن السيبراني",
+  "correct_answer": "إظهار معلومات وكيفية استخدام الأوامر",
+  "options": [
+    {
+      "text": "إظهار الوقت والتاريخ",
+      "is_correct": false
+    },
+    {
+      "text": "إظهار معلومات وكيفية استخدام الأوامر",
+      "is_correct": true
+    },
+    {
+      "text": "إظهار الأوامر المدخلة المسبقة",
+      "is_correct": false
+    },
+    {
+      "text": "إظهار IP الجهاز",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "312",
+  "text": "من عناصر أمن المعلومات ويقصد بها بقاء المعلومة متاحة للمستخدم:",
+  "type": "اختيار متعدد",
+  "difficulty": "سهل",
+  "course": "إدارة أمن المعلومات",
+  "correct_answer": "التوافر (Availability)",
+  "options": [
+    {
+      "text": "السرية (Confidentiality)",
+      "is_correct": false
+    },
+    {
+      "text": "التكامل (Integrity)",
+      "is_correct": false
+    },
+    {
+      "text": "التوافر (Availability)",
+      "is_correct": true
+    },
+    {
+      "text": "المصادقة (Authentication)",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "313",
+  "text": "من توزيعات نظام Linux:",
+  "type": "اختيار متعدد",
+  "difficulty": "سهل",
+  "course": "مقدمة في الأمن السيبراني",
+  "correct_answer": "Ubuntu",
+  "options": [
+    {
+      "text": "Ubuntu",
+      "is_correct": true
+    },
+    {
+      "text": "Windows",
+      "is_correct": false
+    },
+    {
+      "text": "macOS",
+      "is_correct": false
+    },
+    {
+      "text": "DOS",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "314",
+  "text": "ماذا يعني مصطلح CLI؟",
+  "type": "اختيار متعدد",
+  "difficulty": "سهل",
+  "course": "مقدمة في الأمن السيبراني",
+  "correct_answer": "Command Line Interface",
+  "options": [
+    {
+      "text": "Command Line Interface",
+      "is_correct": true
+    },
+    {
+      "text": "Computer Language Interface",
+      "is_correct": false
+    },
+    {
+      "text": "Central Logic Interface",
+      "is_correct": false
+    },
+    {
+      "text": "Control Logic Interface",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "315",
+  "text": "أي بروتوكول يُعتبر غير آمن لنقل البيانات بسبب عدم التشفير؟",
+  "type": "اختيار متعدد",
+  "difficulty": "سهل",
+  "course": "أمن الشبكات",
+  "correct_answer": "Telnet",
+  "options": [
+    {
+      "text": "HTTPS",
+      "is_correct": false
+    },
+    {
+      "text": "SSH",
+      "is_correct": false
+    },
+    {
+      "text": "Telnet",
+      "is_correct": true
+    },
+    {
+      "text": "SFTP",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "316",
+  "text": "قم بتغيير الصلاحيات ولتكن قراءة وكتابة وتنفيذ للمستخدم، كتابة وتنفيذ للمجموعة، قراءة وتنفيذ للبقية؛ للملف (MQCT) بطريقة الأرقام:",
+  "type": "اختيار متعدد",
+  "difficulty": "متوسط",
+  "course": "مقدمة في الأمن السيبراني",
+  "correct_answer": "chmod 735 MQCT",
+  "options": [
+    {
+      "text": "chmod 733 MQCT",
+      "is_correct": false
+    },
+    {
+      "text": "chmod 451 MQCT",
+      "is_correct": false
+    },
+    {
+      "text": "chmod 723 MQCT",
+      "is_correct": false
+    },
+    {
+      "text": "chmod 735 MQCT",
+      "is_correct": true
+    }
+  ]
+},
+  {
+  "id": "317",
+  "text": "ما هو الأمر الصحيح لوضع الصلاحيات بطريقة الأحرف ولتكن قراءة وتنفيذ فقط (للمستخدم - للمجموعة - للبقية) للملف Ali:",
+  "type": "اختيار متعدد",
+  "difficulty": "متوسط",
+  "course": "مقدمة في الأمن السيبراني",
+  "correct_answer": "chmod a=rx Ali",
+  "options": [
+    {
+      "text": "chmod ugo-rx Ali",
+      "is_correct": false
+    },
+    {
+      "text": "chmod ugo*rx Ali",
+      "is_correct": false
+    },
+    {
+      "text": "chmod a=rx Ali",
+      "is_correct": true
+    },
+    {
+      "text": "chmod a+rwx Ali",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "318",
+  "text": "ما هو طول المفتاح المستخدم في طريقة 3DES للتشفير؟",
+  "type": "اختيار متعدد",
+  "difficulty": "صعب",
+  "course": "التشفير التطبيقي",
+  "correct_answer": "168 بت",
+  "options": [
+    {
+      "text": "168 بت",
+      "is_correct": true
+    },
+    {
+      "text": "32 بت",
+      "is_correct": false
+    },
+    {
+      "text": "256 بت",
+      "is_correct": false
+    },
+    {
+      "text": "192 بت",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "319",
+  "text": "ما هي أول طبقة من طبقات الـ OSI؟",
+  "type": "اختيار متعدد",
+  "difficulty": "متوسط",
+  "course": "أمن انترنت الأشياء",
+  "correct_answer": "الطبقة الفيزيائية (Physical Layer)",
+  "options": [
+    {
+      "text": "الطبقة الفيزيائية (Physical Layer)",
+      "is_correct": true
+    },
+    {
+      "text": "طبقة ربط البيانات (Data Link Layer)",
+      "is_correct": false
+    },
+    {
+      "text": "طبقة الشبكة (Network Layer)",
+      "is_correct": false
+    },
+    {
+      "text": "طبقة النقل (Transport Layer)",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "320",
+  "text": "لإخفاء أجهزة المستخدمين من الشبكة الخارجية، تستخدم تقنية:",
+  "type": "اختيار متعدد",
+  "difficulty": "متوسط",
+  "course": "أمن السحابة والخادم",
+  "correct_answer": "NAT (Network Address Translation)",
+  "options": [
+    {
+      "text": "NAT (Network Address Translation)",
+      "is_correct": true
+    },
+    {
+      "text": "DHCP",
+      "is_correct": false
+    },
+    {
+      "text": "DNS",
+      "is_correct": false
+    },
+    {
+      "text": "VPN",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "321",
+  "text": "ماهو الأمر الذي يقوم بالإنتقال من دليل إلى دليل اخر",
+  "type": "اختيار متعدد",
+  "difficulty": "سهل",
+  "course": "مقدمة في الأمن السيبراني",
+  "correct_answer": "cd",
+  "options": [
+    {
+      "text": "ls",
+      "is_correct": false
+    },
+    {
+      "text": "pwd",
+      "is_correct": false
+    },
+    {
+      "text": "cd",
+      "is_correct": true
+    },
+    {
+      "text": "mv",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "322",
+  "text": "يحدث هذا الاحتيال عند محاولة شخص ما التطفل على الحياة الشخصية لشخص اخر",
+  "type": "اختيار متعدد",
+  "difficulty": "سهل",
+  "course": "الجرائم الالكترونية والتحليل الرقمي الجنائي",
+  "correct_answer": "انتهاك الخصوصيه",
+  "options": [
+    {
+      "text": "انتهاك الخصوصيه",
+      "is_correct": true
+    },
+    {
+      "text": "التسلل الالكتروني",
+      "is_correct": false
+    },
+    {
+      "text": "التشفير",
+      "is_correct": false
+    },
+    {
+      "text": "تزوير الهويه",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "323",
+  "text": "عند اتصال جهازك الحاسب الآلي بالشبكة فقد تكون معرض لبعض التهديدات الأمنية وهي",
+  "type": "اختيار متعدد",
+  "difficulty": "سهل",
+  "course": "مقدمة في الأمن السيبراني",
+  "correct_answer": "إصابة الجهاز بالفيروسات",
+  "options": [
+    {
+      "text": "إصابة الجهاز بالفيروسات",
+      "is_correct": true
+    },
+    {
+      "text": "تعرض الخصوصية للكشف",
+      "is_correct": false
+    },
+    {
+      "text": "إصابة جهازك بالملفات الضارة",
+      "is_correct": false
+    },
+    {
+      "text": "تحميل ملفات غير مرغوب فيها",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "324",
+  "text": "من الوسائل المتقدمة لتأمين الشبكة",
+  "type": "اختيار متعدد",
+  "difficulty": "صعب",
+  "course": "أمن الشبكات",
+  "correct_answer": "استخدام أجهزة IDS/IPS",
+  "options": [
+    {
+      "text": "استخدام كلمات مرور قوية",
+      "is_correct": false
+    },
+    {
+      "text": "تشفير البيانات",
+      "is_correct": false
+    },
+    {
+      "text": "استخدام أجهزة IDS/IPS",
+      "is_correct": true
+    },
+    {
+      "text": "تحديث البرامج",
+      "is_correct": false
+    }
+  ]
+},
+  {
+  "id": "325",
+  "text": "الهدف من فحص الثغرات بشكل مستمر هو",
+  "type": "اختيار متعدد",
+  "difficulty": "متوسط",
+  "course": "اختبار الاختراق",
+  "correct_answer": "اكتشاف نقاط الضعف قبل استغلالها",
+  "options": [
+    {
+      "text": "اكتشاف نقاط الضعف قبل استغلالها",
+      "is_correct": true
+    },
+    {
+      "text": "تسريع الشبكة",
+      "is_correct": false
+    },
+    {
+      "text": "توفير الطاقة",
+      "is_correct": false
+    },
+    {
+      "text": "زيادة سعة التخزين",
+      "is_correct": false
+    }
+  ]
+}
+];
+
+        let currentQuestions = [...questionsData],
+            currentPage = 1,
+            questionsPerPage = 10,
+            selectedAnswers = {};
+
+        // Security measures
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (['F12','I','u','s','a','c'].includes(e.key) && (e.ctrlKey||e.shiftKey)) e.preventDefault();
+        });
+        document.addEventListener('dragstart', e => e.preventDefault());
+
+        function initializeFilters() {
+            if (!questionsData.length) return;
+            const courses = [...new Set(questionsData.map(q=>q.course))];
+            const cf = document.getElementById('courseFilter');
+            courses.forEach(c => {
+                const o = document.createElement('option');
+                o.value = c; o.textContent = c;
+                cf.appendChild(o);
+            });
+        }
+
+        function applyFilters() {
+            if (!questionsData.length) return;
+            const s = document.getElementById('searchBox').value.trim().toLowerCase(),
+                  cf = document.getElementById('courseFilter').value,
+                  df = document.getElementById('difficultyFilter').value,
+                  tf = document.getElementById('typeFilter').value;
+            currentQuestions = questionsData.filter(q =>
+                (!s || q.text.toLowerCase().includes(s)) &&
+                (!cf || q.course===cf) &&
+                (!df || q.difficulty===df) &&
+                (!tf || q.type.includes(tf))
+            );
+            currentPage=1; displayQuestions();
+        }
+
+        function resetFilters() {
+            ['searchBox','courseFilter','difficultyFilter','typeFilter'].forEach(id => document.getElementById(id).value='');
+            currentQuestions=[...questionsData]; currentPage=1; selectedAnswers={}; displayQuestions();
+        }
+
+        function shuffleQuestions() {
+            if(!questionsData.length) return;
+            currentQuestions.sort(() => Math.random()-0.5);
+            currentPage=1; displayQuestions();
+        }
+
+        function displayQuestions() {
+            const ctn = document.getElementById('questionsContainer');
+            if(!questionsData.length) { ctn.className='no-questions'; return; }
+            const start=(currentPage-1)*questionsPerPage, page=currentQuestions.slice(start, start+questionsPerPage);
+            if(!page.length) {
+                ctn.innerHTML='<div class="no-questions">لا توجد أسئلة تطابق المعايير المحددة</div>';
+                return;
+            }
+            ctn.className=''; let html='', lastCourse='';
+            page.forEach(q => {
+                if(q.course!==lastCourse){
+                    lastCourse=q.course;
+                    html+=`<div class="course-title">${q.course}</div>`;
+                }
+                const dc = q.difficulty==='سهل'?'badge-easy':q.difficulty==='متوسط'?'badge-medium':'badge-hard',
+                      tc = q.type.includes('اختيار')?'badge-multiple':'badge-truefalse';
+                html+=`
+                <div class="question-card">
+                  <div class="question-header">
+                    <div class="question-number">السؤال ${q.id}</div>
+                    <div class="question-meta">
+                      <span class="badge ${dc}">${q.difficulty}</span>
+                      <span class="badge ${tc}">${q.type}</span>
+                    </div>
+                  </div>
+                  <div class="question-text">${q.text}</div>
+                  <div class="options" id="options-${q.id}">
+                    ${q.type.includes('اختيار')? q.options.map((o,i)=>
+                      `<div class="option" onclick="selectOption('${q.id}',${i})">${String.fromCharCode(65+i)}. ${o.text}</div>`
+                    ).join('') : `
+                      <div class="option" onclick="selectTrueFalse('${q.id}','صحيحة')">أ. العبارة صحيحة</div>
+                      <div class="option" onclick="selectTrueFalse('${q.id}','خاطئة')">ب. العبارة خاطئة</div>`}
+                  </div>
+                  <button class="show-answer-btn" onclick="showAnswer('${q.id}')">إظهار الإجابة الصحيحة</button>
+                </div>`;
+            });
+            ctn.innerHTML=html; updatePagination();
+        }
+
+        function selectOption(qid,idx){
+            const opts=document.querySelectorAll(`#options-${qid} .option`);
+            opts.forEach((el,i)=> el.classList.toggle('selected',i===idx));
+            selectedAnswers[qid]=idx;
+        }
+
+        function selectTrueFalse(qid,ans){
+            const opts=document.querySelectorAll(`#options-${qid} .option`);
+            opts.forEach(el=>el.classList.remove('selected'));
+            opts[ans==='صحيحة'?0:1].classList.add('selected');
+            selectedAnswers[qid]=ans;
+        }
+
+        function showAnswer(qid){
+            const q=questionsData.find(x=>x.id===qid),
+                  opts=document.querySelectorAll(`#options-${qid} .option`);
+            opts.forEach(el=>el.classList.remove('correct','incorrect'));
+            if(q.type.includes('اختيار')){
+                const ci=q.options.findIndex(o=>o.is_correct),
+                      si=selectedAnswers[qid];
+                if(ci>=0) opts[ci].classList.add('correct');
+                if(si!==undefined&&si!==ci) opts[si].classList.add('incorrect');
+            } else {
+                const ca=q.correct_answer.includes('صحيحة')?0:1,
+                      sa=selectedAnswers[qid]==='صحيحة'?0:1;
+                opts[ca].classList.add('correct');
+                if(sa!==ca) opts[sa].classList.add('incorrect');
+            }
+        }
+
+        function updatePagination(){
+            const total=Math.ceil(currentQuestions.length/questionsPerPage),
+                  pg=document.getElementById('pagination');
+            if(total<=1){pg.innerHTML='';return;}
+            let html='';
+            if(currentPage>1) html+=`<button onclick="changePage(${currentPage-1})">السابق</button>`;
+            for(let i=1;i<=total;i++){
+                html+=i===currentPage?
+                    `<button class="active">${i}</button>`:
+                    `<button onclick="changePage(${i})">${i}</button>`;
+            }
+            if(currentPage<total) html+=`<button onclick="changePage(${currentPage+1})">التالي</button>`;
+            pg.innerHTML=html;
+        }
+
+        function changePage(p){currentPage=p; displayQuestions(); window.scrollTo(0,0);}
+
+        document.getElementById('searchBox').addEventListener('input',function(){
+            clearTimeout(this._t); this._t=setTimeout(applyFilters,300);
+        });
+
+        document.addEventListener('DOMContentLoaded',()=>{
+            initializeFilters(); displayQuestions();
+        });
+    </script>
+</body>
+</html>
